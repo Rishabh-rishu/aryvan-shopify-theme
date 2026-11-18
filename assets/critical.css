@@ -1,4 +1,4 @@
-/** Critical CSS for Aryvan Botanical Wellness theme. */
+/** Critical CSS for Aryvan Botanical Wellness theme — Luxury Redesign 2.0 */
 
 /* Reset styles */
 * {
@@ -15,10 +15,10 @@ body {
   flex-direction: column;
   margin: 0;
   min-height: 100svh;
-  font-family: var(--font-primary--family, -apple-system, BlinkMacSystemFont, sans-serif);
-  background-color: var(--color-background, #FBF9F5);
-  color: var(--color-foreground, #232E24);
-  line-height: 1.6;
+  font-family: var(--font-primary--family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  background-color: var(--color-background, #F8F5EF);
+  color: var(--color-foreground, #292D29);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -42,7 +42,7 @@ textarea,
 select,
 button {
   font: inherit;
-  border-radius: var(--style-border-radius-inputs);
+  border-radius: var(--style-border-radius-inputs, 2px);
 }
 
 select {
@@ -58,8 +58,9 @@ dialog {
 
 p {
   text-wrap: pretty;
-  font-size: 1rem;
-  color: var(--color-foreground);
+  font-size: 1.05rem;
+  color: var(--color-foreground, #292D29);
+  line-height: 1.7;
 }
 
 p,
@@ -97,88 +98,120 @@ h6,
   font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
   font-style: var(--font-heading--style, normal);
   font-weight: 400;
-  line-height: 1.25;
-  color: var(--color-foreground);
+  line-height: 1.2;
+  color: var(--color-primary, #1F3025);
   letter-spacing: -0.015em;
 }
 
 h1 {
-  font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
-  line-height: 1.15;
+  font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
-  line-height: 1.2;
+  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+  line-height: 1.18;
 }
 
 h3 {
-  font-size: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
+  font-size: clamp(1.35rem, 2vw + 0.25rem, 2rem);
+  line-height: 1.25;
 }
 
 h4 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 
 .eyebrow {
   display: inline-block;
   font-family: var(--font-primary--family);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-secondary);
-  margin-bottom: 0.75rem;
+  color: var(--color-olive, #69775C);
+  margin-bottom: 0.85rem;
 }
 
 /* Accessibility Focus */
 :focus-visible {
-  outline: 2px solid var(--color-secondary);
+  outline: 2px solid var(--color-accent, #C7A77A);
   outline-offset: 3px;
 }
 
-/* Botanical Buttons */
+/* Luxury Botanical Buttons */
 .button,
 .button-primary,
-.button-secondary {
+.button-secondary,
+.button-gold {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.75rem;
+  gap: 0.65rem;
+  padding: 0.95rem 2.25rem;
   font-family: var(--font-primary--family);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: var(--style-border-radius-inputs);
-  transition: all 0.25s var(--transition-timing, ease);
+  border-radius: var(--style-border-radius-inputs, 2px);
+  transition: all 0.35s var(--ease-luxury, ease);
   cursor: pointer;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 }
 
 .button-primary {
-  background-color: var(--color-primary);
-  color: #FBF9F5;
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary, #1F3025);
+  color: #F8F5EF;
+  border: 1px solid var(--color-primary, #1F3025);
 }
 
 .button-primary:hover {
-  background-color: var(--color-secondary);
-  border-color: var(--color-secondary);
-  color: #FFFFFF;
+  background-color: var(--color-secondary, #263B2D);
+  border-color: var(--color-accent, #C7A77A);
+  color: var(--color-accent, #C7A77A);
+  transform: translateY(-2px);
 }
 
 .button-secondary {
   background-color: transparent;
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  color: var(--color-primary, #1F3025);
+  border: 1px solid var(--color-primary, #1F3025);
 }
 
 .button-secondary:hover {
-  background-color: var(--color-surface);
-  color: var(--color-primary);
+  background-color: var(--color-surface, #F1EADF);
+  color: var(--color-primary, #1F3025);
+  transform: translateY(-2px);
+}
+
+.button-gold {
+  background-color: var(--color-accent, #C7A77A);
+  color: #1F3025;
+  border: 1px solid var(--color-accent, #C7A77A);
+}
+
+.button-gold:hover {
+  background-color: #D8B98D;
+  border-color: #D8B98D;
+  transform: translateY(-2px);
+}
+
+.button-outline-light {
+  background-color: transparent;
+  color: #F8F5EF;
+  border: 1px solid rgba(248, 245, 239, 0.45);
+}
+
+.button-outline-light:hover {
+  background-color: rgba(248, 245, 239, 0.12);
+  border-color: #F8F5EF;
+  color: #FFFFFF;
+  transform: translateY(-2px);
 }
 
 /* Section layout utilities */
@@ -204,15 +237,112 @@ h4 {
   grid-column: 1 / -1;
 }
 
-/* Shared botanical card styles */
-.botanical-card {
-  background-color: var(--color-surface, #F4EFE6);
-  border: 1px solid var(--color-border, #E6E1D6);
-  border-radius: var(--style-border-radius-cards, 10px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Section Contrast Utilities */
+.section-dark {
+  background-color: var(--color-primary, #1F3025);
+  color: #F8F5EF;
 }
 
-.botanical-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(35, 46, 36, 0.06);
+.section-dark h1,
+.section-dark h2,
+.section-dark h3,
+.section-dark p {
+  color: #F8F5EF;
+}
+
+.section-dark .eyebrow {
+  color: var(--color-accent, #C7A77A);
+}
+
+.section-cream {
+  background-color: var(--color-surface, #F1EADF);
+}
+
+.section-ivory {
+  background-color: var(--color-background, #F8F5EF);
+}
+
+/* Luxury Editorial Image Card */
+.editorial-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--style-border-radius-cards, 4px);
+  background-color: var(--color-surface, #F1EADF);
+  border: 1px solid var(--color-border, #E4DDD1);
+}
+
+.editorial-card .editorial-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-luxury, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.editorial-card:hover .editorial-card__img {
+  transform: scale(1.05);
+}
+
+/* Floating Leaf & Botanical Animations */
+@keyframes leafFloatSlow {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-25px) translateX(18px) rotate(8deg);
+  }
+  60% {
+    transform: translateY(-45px) translateX(-12px) rotate(-6deg);
+  }
+  85% {
+    transform: translateY(-20px) translateX(10px) rotate(4deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes leafFloatGentle {
+  0% {
+    transform: translateY(0) translateX(0) rotate(-12deg);
+  }
+  50% {
+    transform: translateY(-30px) translateX(-20px) rotate(14deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) rotate(-12deg);
+  }
+}
+
+@keyframes sunlightCaustic {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.06) translateY(-10px);
+  }
+}
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

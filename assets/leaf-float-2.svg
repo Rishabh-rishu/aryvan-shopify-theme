@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 140" fill="none" width="80" height="140" aria-hidden="true" focusable="false">
+  <!-- Slender willow / olive botanical leaf -->
+  <defs>
+    <linearGradient id="leafGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C7A77A" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#A4AE98" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#1F3025" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+  <!-- Blade -->
+  <path d="M40 8 C60 40 70 85 48 132 C43 138 41 140 40 140 C39 140 37 138 32 132 C10 85 20 40 40 8 Z" fill="url(#leafGrad2)"/>
+  <!-- Central spine -->
+  <path d="M40 8 Q39 74 40 140" stroke="#F8F5EF" stroke-width="1" stroke-opacity="0.35" stroke-linecap="round"/>
+  <!-- Lateral veins -->
+  <path d="M40 42 Q52 48 57 58" stroke="#F8F5EF" stroke-width="0.7" stroke-opacity="0.2"/>
+  <path d="M40 46 Q28 52 23 62" stroke="#F8F5EF" stroke-width="0.7" stroke-opacity="0.2"/>
+  <path d="M40 78 Q53 84 55 94" stroke="#F8F5EF" stroke-width="0.7" stroke-opacity="0.2"/>
+  <path d="M40 82 Q27 88 25 98" stroke="#F8F5EF" stroke-width="0.7" stroke-opacity="0.2"/>
+</svg>

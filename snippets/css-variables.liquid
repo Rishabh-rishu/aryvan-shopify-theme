@@ -1,5 +1,5 @@
 {% doc %}
-  Renders CSS custom properties and font-face declarations for Aryvan Botanical Wellness.
+  Renders CSS custom properties, fonts, and luxury tokens for Aryvan Botanical Wellness.
 
   @example
   {% render 'css-variables' %}
@@ -28,16 +28,20 @@
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
 
-    --color-background: {{ settings.background_color | default: '#FBF9F5' }};
-    --color-foreground: {{ settings.foreground_color | default: '#232E24' }};
-    --color-primary: {{ settings.color_primary | default: '#263629' }};
-    --color-secondary: {{ settings.color_secondary | default: '#5B6E5D' }};
-    --color-surface: {{ settings.color_surface | default: '#F4EFE6' }};
-    --color-accent: {{ settings.color_accent | default: '#C49A6C' }};
-    --color-border: {{ settings.color_border | default: '#E6E1D6' }};
+    /* Luxury Botanical Color System */
+    --color-background: {{ settings.background_color | default: '#F8F5EF' }};
+    --color-foreground: {{ settings.foreground_color | default: '#292D29' }};
+    --color-primary: {{ settings.color_primary | default: '#1F3025' }};
+    --color-secondary: {{ settings.color_secondary | default: '#263B2D' }};
+    --color-surface: {{ settings.color_surface | default: '#F1EADF' }};
+    --color-sage: {{ settings.color_sage | default: '#A4AE98' }};
+    --color-olive: {{ settings.color_olive | default: '#69775C' }};
+    --color-accent: {{ settings.color_accent | default: '#C7A77A' }};
+    --color-gold: {{ settings.color_accent | default: '#C7A77A' }};
+    --color-border: {{ settings.color_border | default: '#E4DDD1' }};
 
-    --style-border-radius-inputs: {{ settings.input_corner_radius | default: 4 }}px;
-    --style-border-radius-cards: 10px;
-    --transition-timing: cubic-bezier(0.25, 1, 0.5, 1);
+    --style-border-radius-inputs: {{ settings.input_corner_radius | default: 2 }}px;
+    --style-border-radius-cards: 4px;
+    --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
   }
 {% endstyle %}

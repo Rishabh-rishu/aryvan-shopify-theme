@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 160" fill="none" width="100" height="160" aria-hidden="true" focusable="false">
+  <!-- Organic curved botanical leaf with subtle depth -->
+  <defs>
+    <linearGradient id="leafGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A4AE98" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#69775C" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#263B2D" stop-opacity="0.65"/>
+    </linearGradient>
+  </defs>
+  <!-- Blade -->
+  <path d="M50 5 C75 35 95 85 75 130 C65 145 52 155 50 155 C48 155 35 145 25 130 C5 85 25 35 50 5 Z" fill="url(#leafGrad1)"/>
+  <!-- Central stem -->
+  <path d="M50 5 Q49 80 50 155" stroke="#F1EADF" stroke-width="1.2" stroke-opacity="0.4" stroke-linecap="round"/>
+  <!-- Delicate secondary veins -->
+  <path d="M50 40 Q65 48 72 58" stroke="#F1EADF" stroke-width="0.8" stroke-opacity="0.25"/>
+  <path d="M50 45 Q35 53 28 63" stroke="#F1EADF" stroke-width="0.8" stroke-opacity="0.25"/>
+  <path d="M50 75 Q68 83 74 95" stroke="#F1EADF" stroke-width="0.8" stroke-opacity="0.25"/>
+  <path d="M50 80 Q32 88 26 100" stroke="#F1EADF" stroke-width="0.8" stroke-opacity="0.25"/>
+  <path d="M50 110 Q64 118 68 128" stroke="#F1EADF" stroke-width="0.8" stroke-opacity="0.25"/>
+  <path d="M50 115 Q36 123 32 133" stroke="#F1EADF" stroke-width="0.8" stroke-opacity="0.25"/>
+</svg>

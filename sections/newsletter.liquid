@@ -1,4 +1,4 @@
-<section class="newsletter full-width newsletter--theme-{{ section.settings.color_scheme }}">
+<section class="newsletter full-width newsletter--theme-{{ section.settings.color_scheme }}" id="newsletter">
   <div class="newsletter__container">
     <div class="newsletter__content">
       {% if section.settings.eyebrow != blank %}
@@ -33,7 +33,7 @@
             >
             <button
               type="submit"
-              class="button button-primary newsletter__button"
+              class="button button-gold newsletter__button"
               name="commit"
             >
               {{ section.settings.button_label | default: 'Subscribe' }}
@@ -42,7 +42,7 @@
 
           {% if form.posted_successfully? %}
             <p class="newsletter__message newsletter__message--success" role="status">
-              {{ 'newsletter.success' | t }}
+              {{ 'newsletter.success' | t | default: 'Thank you for joining our circle. Welcome to Aryvan Botanical Wellness.' }}
             </p>
           {% elsif form.errors %}
             <p class="newsletter__message newsletter__message--error" role="alert">
@@ -62,43 +62,35 @@
 
 {% stylesheet %}
   .newsletter {
-    padding: 6rem 0;
+    padding: 7rem 0;
     text-align: center;
   }
 
-  .newsletter--theme-sage {
-    background-color: #EAEFE8;
-  }
-
-  .newsletter--theme-cream {
-    background-color: var(--color-surface, #F4EFE6);
-  }
-
   .newsletter--theme-forest {
-    background-color: var(--color-primary, #263629);
-    color: #FBF9F5;
+    background-color: var(--color-primary, #1F3025);
+    color: #F8F5EF;
   }
 
-  .newsletter--theme-forest .newsletter__heading,
-  .newsletter--theme-forest .newsletter__subtext,
-  .newsletter--theme-forest .newsletter__footnote {
-    color: #FBF9F5;
+  .newsletter--theme-forest .newsletter__heading {
+    color: #F8F5EF;
+  }
+
+  .newsletter--theme-forest .newsletter__subtext {
+    color: #F1EADF;
+    opacity: 0.9;
   }
 
   .newsletter--theme-forest .eyebrow {
-    color: var(--color-accent, #C49A6C);
+    color: var(--color-accent, #C7A77A);
   }
 
-  .newsletter--theme-forest .button-primary {
-    background-color: var(--color-accent, #C49A6C);
-    border-color: var(--color-accent, #C49A6C);
-    color: #232E24;
+  .newsletter--theme-forest .newsletter__footnote {
+    color: #A4AE98;
   }
 
-  .newsletter--theme-forest .button-primary:hover {
-    background-color: #FBF9F5;
-    border-color: #FBF9F5;
-    color: #232E24;
+  .newsletter--theme-cream {
+    background-color: var(--color-surface, #F1EADF);
+    color: var(--color-foreground, #292D29);
   }
 
   .newsletter__container {
@@ -108,77 +100,85 @@
   }
 
   .newsletter__content {
-    max-width: 620px;
+    max-width: 660px;
     margin: 0 auto;
   }
 
   .newsletter__heading {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
   }
 
   .newsletter__subtext {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 2.25rem;
-    opacity: 0.88;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin-bottom: 2.75rem;
   }
 
   .newsletter__form-wrapper {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .newsletter__input-group {
     display: flex;
-    gap: 0.5rem;
-    max-width: 500px;
+    gap: 0.75rem;
+    max-width: 520px;
     margin: 0 auto;
   }
 
   .newsletter__input {
     flex: 1;
-    padding: 0.85rem 1.25rem;
-    border: 1px solid var(--color-border, #E6E1D6);
+    padding: 0.95rem 1.35rem;
+    border: 1px solid rgba(228, 221, 209, 0.4);
     background-color: #FFFFFF;
-    color: #232E24;
-    border-radius: var(--style-border-radius-inputs, 4px);
+    color: #292D29;
+    border-radius: var(--style-border-radius-inputs, 2px);
     font-size: 0.95rem;
     outline: none;
+    transition: border-color 0.2s ease;
   }
 
   .newsletter__input:focus {
-    border-color: var(--color-secondary, #5B6E5D);
+    border-color: var(--color-accent, #C7A77A);
+  }
+
+  .newsletter__button {
+    white-space: nowrap;
   }
 
   .newsletter__message {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 2px;
   }
 
   .newsletter__message--success {
-    background-color: rgba(91, 110, 93, 0.15);
-    color: var(--color-primary, #263629);
+    background-color: rgba(199, 167, 122, 0.15);
+    color: var(--color-accent, #C7A77A);
+    border: 1px solid rgba(199, 167, 122, 0.35);
   }
 
   .newsletter__message--error {
     background-color: rgba(180, 50, 50, 0.1);
-    color: #900;
+    color: #ffb4b4;
   }
 
   .newsletter__footnote {
     display: block;
-    font-size: 0.8rem;
-    opacity: 0.7;
-    margin-top: 1rem;
+    font-size: 0.82rem;
+    margin-top: 1.25rem;
+    letter-spacing: 0.04em;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     .newsletter {
-      padding: 4rem 0;
+      padding: 4.5rem 0;
     }
     .newsletter__input-group {
       flex-direction: column;
+    }
+    .newsletter__button {
+      width: 100%;
     }
   }
 {% endstylesheet %}
@@ -192,17 +192,16 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "options": [
-        { "value": "cream", "label": "Warm Cream" },
-        { "value": "sage", "label": "Soft Sage" },
-        { "value": "forest", "label": "Deep Forest" }
+        { "value": "forest", "label": "Deep Forest Green" },
+        { "value": "cream", "label": "Soft Cream" }
       ],
-      "default": "sage"
+      "default": "forest"
     },
     {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow text",
-      "default": "Stay In Rhythm"
+      "default": "STAY IN RHYTHM"
     },
     {
       "type": "text",
@@ -214,7 +213,7 @@
       "type": "textarea",
       "id": "text",
       "label": "Subtext",
-      "default": "Receive seasonal harvest notes, herbal formulations, and exclusive private offerings directly to your inbox."
+      "default": "Thoughtful notes on botanical rituals, natural beauty and conscious living."
     },
     {
       "type": "text",
@@ -232,7 +231,7 @@
       "type": "text",
       "id": "footer_note",
       "label": "Footnote",
-      "default": "We respect your quiet space. No synthetic clutter, ever."
+      "default": "We honor your tranquility. Never spam, only quiet herbal wisdom."
     }
   ],
   "presets": [

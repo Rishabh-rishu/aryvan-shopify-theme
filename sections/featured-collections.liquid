@@ -17,63 +17,52 @@
     <div class="featured-collections__grid">
       {% for block in section.blocks %}
         {% assign collection_item = block.settings.collection %}
+        {% assign card_url = collection_item.url | default: routes.all_products_collection_url %}
+        {% assign card_title = block.settings.custom_title | default: collection_item.title | default: 'Botanical Collection' %}
 
         <div class="featured-collections__item" {{ block.shopify_attributes }}>
-          {% if collection_item != blank %}
-            <a href="{{ collection_item.url }}" class="featured-collections__card">
-              <div class="featured-collections__media">
-                {% assign card_image = block.settings.custom_image | default: collection_item.featured_image %}
-                {% if card_image != blank %}
-                  {% render 'image',
-                    image: card_image,
-                    url: collection_item.url,
-                    class: 'featured-collections__image',
-                    width: 600,
-                    height: 700,
-                    crop: 'center'
-                  %}
-                {% else %}
-                  <div class="featured-collections__placeholder">
-                    {{ 'icon-leaf.svg' | inline_asset_content }}
-                  </div>
-                {% endif %}
-              </div>
-              <div class="featured-collections__content">
-                <h3 class="featured-collections__title">
-                  {{ block.settings.custom_title | default: collection_item.title }}
-                </h3>
-                <span class="featured-collections__count">
-                  {{ collection_item.products_count | default: 0 }} {{ collection_item.products_count | pluralize: 'formulation', 'formulations' }}
-                </span>
-              </div>
-            </a>
-          {% else %}
-            <div class="featured-collections__card featured-collections__card--placeholder">
-              <div class="featured-collections__media">
-                {% if block.settings.custom_image != blank %}
-                  {% render 'image',
-                    image: block.settings.custom_image,
-                    class: 'featured-collections__image',
-                    width: 600,
-                    height: 700,
-                    crop: 'center'
-                  %}
-                {% else %}
-                  <div class="featured-collections__placeholder">
-                    {{ 'icon-leaf.svg' | inline_asset_content }}
-                  </div>
-                {% endif %}
-              </div>
-              <div class="featured-collections__content">
-                <h3 class="featured-collections__title">
-                  {{ block.settings.custom_title | default: 'Botanical Collection' }}
-                </h3>
-                <span class="featured-collections__count">
-                  Configure in theme editor
-                </span>
+          <a href="{{ card_url }}" class="featured-collections__card editorial-card">
+            <div class="featured-collections__media">
+              {% if block.settings.custom_image != blank %}
+                {{ block.settings.custom_image | image_url: width: 900 | image_tag: class: 'editorial-card__img', loading: 'lazy', alt: card_title }}
+              {% elsif collection_item.featured_image != blank %}
+                {{ collection_item.featured_image | image_url: width: 900 | image_tag: class: 'editorial-card__img', loading: 'lazy', alt: card_title }}
+              {% elsif block.settings.default_temp_image != blank %}
+                <img
+                  src="{{ block.settings.default_temp_image | asset_url }}"
+                  alt="{{ card_title }}"
+                  class="editorial-card__img"
+                  width="800"
+                  height="1000"
+                  loading="lazy"
+                >
+              {% else %}
+                <img
+                  src="{{ 'temp-collection-elixirs.webp' | asset_url }}"
+                  alt="{{ card_title }}"
+                  class="editorial-card__img"
+                  width="800"
+                  height="1000"
+                  loading="lazy"
+                >
+              {% endif %}
+
+              <div class="featured-collections__gradient"></div>
+            </div>
+
+            <div class="featured-collections__content">
+              {% if block.settings.subtitle != blank %}
+                <span class="featured-collections__eyebrow">{{ block.settings.subtitle }}</span>
+              {% endif %}
+
+              <h3 class="featured-collections__title">{{ card_title }}</h3>
+
+              <div class="featured-collections__cta">
+                <span class="featured-collections__cta-text">{{ 'collections.view_collection' | t | default: 'Explore Collection' }}</span>
+                <span class="featured-collections__arrow" aria-hidden="true">&rarr;</span>
               </div>
             </div>
-          {% endif %}
+          </a>
         </div>
       {% endfor %}
     </div>
@@ -82,8 +71,8 @@
 
 {% stylesheet %}
   .featured-collections {
-    padding: 5rem 0;
-    background-color: var(--color-background, #FBF9F5);
+    padding: 6.5rem 0;
+    background-color: var(--color-background, #F8F5EF);
   }
 
   .featured-collections__container {
@@ -94,104 +83,145 @@
 
   .featured-collections__header {
     text-align: center;
-    max-width: 640px;
-    margin: 0 auto 3.5rem;
+    max-width: 680px;
+    margin: 0 auto 4rem;
   }
 
   .featured-collections__heading {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
   }
 
   .featured-collections__subtext {
-    font-size: 1.05rem;
-    color: var(--color-foreground, #232E24);
+    font-size: 1.1rem;
+    color: var(--color-foreground, #292D29);
     opacity: 0.85;
   }
 
   .featured-collections__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.25rem;
   }
 
   .featured-collections__card {
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    border-radius: var(--style-border-radius-cards, 10px);
+    position: relative;
+    border-radius: var(--style-border-radius-cards, 4px);
     overflow: hidden;
-    background-color: var(--color-surface, #F4EFE6);
-    border: 1px solid var(--color-border, #E6E1D6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     height: 100%;
+    aspect-ratio: 4 / 5.2;
+    box-shadow: 0 8px 24px rgba(31, 48, 37, 0.05);
+    transition: transform 0.4s var(--ease-luxury), box-shadow 0.4s var(--ease-luxury);
   }
 
   .featured-collections__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(35, 46, 36, 0.06);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(31, 48, 37, 0.12);
   }
 
   .featured-collections__media {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    background-color: #EFEAE0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
   }
 
-  .featured-collections__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s var(--transition-timing, ease);
+  .featured-collections__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(31, 48, 37, 0.1) 0%,
+      rgba(31, 48, 37, 0.25) 50%,
+      rgba(24, 38, 29, 0.88) 100%
+    );
+    z-index: 2;
+    transition: background 0.4s ease;
   }
 
-  .featured-collections__card:hover .featured-collections__image img {
-    transform: scale(1.05);
-  }
-
-  .featured-collections__placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-secondary, #5B6E5D);
-    opacity: 0.5;
-  }
-
-  .featured-collections__placeholder svg {
-    width: 48px;
-    height: 48px;
+  .featured-collections__card:hover .featured-collections__gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(31, 48, 37, 0.05) 0%,
+      rgba(31, 48, 37, 0.2) 40%,
+      rgba(20, 32, 24, 0.92) 100%
+    );
   }
 
   .featured-collections__content {
-    padding: 1.5rem;
-    text-align: center;
+    position: relative;
+    z-index: 3;
+    margin-top: auto;
+    padding: 2.25rem 2rem;
+    color: #F8F5EF;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.4rem;
+  }
+
+  .featured-collections__eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent, #C7A77A);
   }
 
   .featured-collections__title {
-    font-size: 1.35rem;
     font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
-    color: var(--color-foreground, #232E24);
+    font-size: 1.85rem;
+    line-height: 1.15;
+    color: #F8F5EF;
+    margin: 0.25rem 0 0.5rem;
   }
 
-  .featured-collections__count {
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
+  .featured-collections__cta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-secondary, #5B6E5D);
+    color: var(--color-accent, #C7A77A);
+    transition: gap 0.3s ease;
   }
 
-  @media (max-width: 768px) {
+  .featured-collections__card:hover .featured-collections__cta {
+    gap: 0.85rem;
+    color: #FFFFFF;
+  }
+
+  .featured-collections__arrow {
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-collections__card:hover .featured-collections__arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 1024px) {
+    .featured-collections__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+  }
+
+  @media (max-width: 680px) {
     .featured-collections {
-      padding: 3.5rem 0;
+      padding: 4.5rem 0;
     }
     .featured-collections__grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .featured-collections__card {
+      aspect-ratio: 4 / 4.5;
     }
   }
 {% endstylesheet %}
@@ -216,28 +246,44 @@
       "type": "textarea",
       "id": "text",
       "label": "Subtext",
-      "default": "Explore our hand-formulated categories designed for holistic balance and daily restoration."
+      "default": "Explore our hand-formulated categories designed for holistic balance, deep nourishment, and daily restoration."
     }
   ],
   "blocks": [
     {
       "type": "collection",
-      "name": "Collection",
+      "name": "Collection Card",
       "settings": [
         {
           "type": "collection",
           "id": "collection",
-          "label": "Select collection"
+          "label": "Shopify collection"
         },
         {
           "type": "text",
           "id": "custom_title",
-          "label": "Custom title override"
+          "label": "Collection title override"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Category subtitle"
         },
         {
           "type": "image_picker",
           "id": "custom_image",
-          "label": "Custom image override"
+          "label": "Custom image"
+        },
+        {
+          "type": "select",
+          "id": "default_temp_image",
+          "label": "Default temporary photography",
+          "options": [
+            { "value": "temp-collection-elixirs.webp", "label": "Elixirs & Tinctures (Amber Glass)" },
+            { "value": "temp-collection-skincare.webp", "label": "Botanical Skincare (Organic Herbs)" },
+            { "value": "temp-collection-teas.webp", "label": "Herbal Teas & Infusions (Dried Botanicals)" }
+          ],
+          "default": "temp-collection-elixirs.webp"
         }
       ]
     }
@@ -249,19 +295,25 @@
         {
           "type": "collection",
           "settings": {
-            "custom_title": "Restorative Elixirs"
+            "custom_title": "Restorative Elixirs",
+            "subtitle": "Whole-Plant Tinctures",
+            "default_temp_image": "temp-collection-elixirs.webp"
           }
         },
         {
           "type": "collection",
           "settings": {
-            "custom_title": "Botanical Skincare"
+            "custom_title": "Botanical Skincare",
+            "subtitle": "Living Herbal Oils",
+            "default_temp_image": "temp-collection-skincare.webp"
           }
         },
         {
           "type": "collection",
           "settings": {
-            "custom_title": "Herbal Teas & Infusions"
+            "custom_title": "Herbal Teas & Infusions",
+            "subtitle": "Artisanal Loose Leaf",
+            "default_temp_image": "temp-collection-teas.webp"
           }
         }
       ]

@@ -26,23 +26,42 @@
       {% if section.settings.show_view_all and featured_collection.url != blank %}
         <div class="best-sellers__footer">
           <a href="{{ featured_collection.url }}" class="button button-secondary">
-            {{ 'collections.view_collection' | t }}
+            {{ 'collections.view_collection' | t | default: 'View All Formulations' }}
           </a>
         </div>
       {% endif %}
     {% else %}
-      <div class="best-sellers__empty-state botanical-card">
-        <div class="best-sellers__empty-icon">
-          {{ 'icon-leaf.svg' | inline_asset_content }}
+      <!-- Intentional Luxury Botanical Showcase / Empty State -->
+      <div class="best-sellers__showcase">
+        <div class="best-sellers__showcase-media editorial-card">
+          <img
+            src="{{ 'temp-wellness-ritual.webp' | asset_url }}"
+            alt="Artisanal botanical oil and amber apothecary bottles"
+            class="editorial-card__img"
+            width="1000"
+            height="1200"
+            loading="lazy"
+          >
         </div>
-        <h3 class="best-sellers__empty-title">Pure Formulations in Preparation</h3>
-        <p class="best-sellers__empty-text">
-          {% if featured_collection == blank %}
-            Select a collection in the Shopify Theme Editor to display your curated botanical wellness formulations here.
-          {% else %}
-            {{ 'products.empty' | t }}
-          {% endif %}
-        </p>
+
+        <div class="best-sellers__showcase-content">
+          <span class="eyebrow">{{ 'products.empty' | t | default: 'Artisanal Small Batches' }}</span>
+          <h3 class="best-sellers__showcase-title">Fresh Harvest Formulations in Preparation</h3>
+          <p class="best-sellers__showcase-text">
+            Our apothecaries are currently slow-macerating seasonal harvests in small amber vessels. We prioritize living phytochemical potency over mass industrialization.
+          </p>
+          <p class="best-sellers__showcase-text">
+            Once products are configured in your Shopify admin or selected in the Theme Editor, your best sellers will appear here seamlessly.
+          </p>
+          <div class="best-sellers__showcase-actions">
+            <a href="#brand-story" class="button button-primary">
+              Discover Our Ethos
+            </a>
+            <a href="#newsletter" class="button button-secondary">
+              Join Harvest Previews
+            </a>
+          </div>
+        </div>
       </div>
     {% endif %}
   </div>
@@ -50,8 +69,9 @@
 
 {% stylesheet %}
   .best-sellers {
-    padding: 5rem 0;
-    background-color: var(--color-background, #FBF9F5);
+    padding: 6.5rem 0;
+    background-color: var(--color-surface, #F1EADF);
+    border-top: 1px solid var(--color-border, #E4DDD1);
   }
 
   .best-sellers__container {
@@ -62,23 +82,23 @@
 
   .best-sellers__header {
     text-align: center;
-    max-width: 640px;
-    margin: 0 auto 3.5rem;
+    max-width: 680px;
+    margin: 0 auto 4rem;
   }
 
   .best-sellers__heading {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
   }
 
   .best-sellers__subtext {
-    font-size: 1.05rem;
-    color: var(--color-foreground, #232E24);
+    font-size: 1.1rem;
+    color: var(--color-foreground, #292D29);
     opacity: 0.85;
   }
 
   .best-sellers__grid {
     display: grid;
-    gap: 2rem;
+    gap: 2.25rem;
   }
 
   .best-sellers__grid--cols-3 {
@@ -89,46 +109,55 @@
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .best-sellers__empty-state {
-    padding: 3.5rem 2rem;
-    text-align: center;
-    max-width: 580px;
-    margin: 0 auto;
+  /* Intentional Botanical Showcase when collection is empty */
+  .best-sellers__showcase {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 4rem;
+    align-items: center;
+    background-color: var(--color-background, #F8F5EF);
+    border: 1px solid var(--color-border, #E4DDD1);
+    border-radius: var(--style-border-radius-cards, 4px);
+    padding: 3rem;
+    box-shadow: 0 10px 30px rgba(31, 48, 37, 0.04);
+  }
+
+  .best-sellers__showcase-media {
+    aspect-ratio: 4 / 4.8;
+    overflow: hidden;
+  }
+
+  .best-sellers__showcase-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
-  .best-sellers__empty-icon {
-    color: var(--color-secondary, #5B6E5D);
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .best-sellers__empty-icon svg {
-    width: 40px;
-    height: 40px;
-  }
-
-  .best-sellers__empty-title {
+  .best-sellers__showcase-title {
     font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
-    font-size: 1.5rem;
-    color: var(--color-primary, #263629);
+    font-size: clamp(1.85rem, 2.5vw, 2.5rem);
+    line-height: 1.2;
+    color: var(--color-primary, #1F3025);
+    margin: 0;
   }
 
-  .best-sellers__empty-text {
-    font-size: 0.95rem;
-    color: var(--color-foreground, #232E24);
-    opacity: 0.8;
-    line-height: 1.6;
+  .best-sellers__showcase-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-foreground, #292D29);
+    opacity: 0.88;
+    margin: 0;
+  }
+
+  .best-sellers__showcase-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 
   .best-sellers__footer {
-    margin-top: 3.5rem;
+    margin-top: 4rem;
     text-align: center;
   }
 
@@ -136,16 +165,27 @@
     .best-sellers__grid--cols-4 {
       grid-template-columns: repeat(2, 1fr);
     }
+    .best-sellers__showcase {
+      grid-template-columns: 1fr;
+      padding: 2.25rem;
+      gap: 2.5rem;
+    }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 680px) {
     .best-sellers {
-      padding: 3.5rem 0;
+      padding: 4.5rem 0;
     }
     .best-sellers__grid--cols-3,
     .best-sellers__grid--cols-4 {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+    }
+    .best-sellers__showcase-actions {
+      flex-direction: column;
+    }
+    .best-sellers__showcase-actions .button {
+      width: 100%;
     }
   }
 {% endstylesheet %}
@@ -157,7 +197,7 @@
     {
       "type": "collection",
       "id": "collection",
-      "label": "Collection"
+      "label": "Shopify collection"
     },
     {
       "type": "text",
@@ -191,14 +231,8 @@
       "id": "columns_desktop",
       "label": "Desktop columns",
       "options": [
-        {
-          "value": "3",
-          "label": "3 columns"
-        },
-        {
-          "value": "4",
-          "label": "4 columns"
-        }
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
       ],
       "default": "4"
     },

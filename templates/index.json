@@ -3,14 +3,15 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "eyebrow": "Aryvan Botanical Wellness",
-        "heading": "Harmonize Body & Spirit Through Plant Wisdom",
-        "text": "Ethically harvested organic botanicals and artisanal alchemy crafted to restore calm, vitality, and holistic well-being.",
-        "primary_button_label": "Shop Best Sellers",
-        "secondary_button_label": "Explore Our Ethos",
+        "eyebrow": "ARYVAN BOTANICAL WELLNESS",
+        "heading": "Nature, Thoughtfully Refined.",
+        "text": "Discover the harmony of botanical wisdom and modern wellness.",
+        "primary_button_label": "EXPLORE THE COLLECTION",
+        "secondary_button_label": "OUR PHILOSOPHY",
+        "enable_floating_leaves": true,
         "alignment": "center",
-        "min_height": 640,
-        "overlay_opacity": 40
+        "min_height": 680,
+        "overlay_opacity": 75
       }
     },
     "featured_collections": {
@@ -19,19 +20,25 @@
         "collection_1": {
           "type": "collection",
           "settings": {
-            "custom_title": "Restorative Elixirs"
+            "custom_title": "Restorative Elixirs",
+            "subtitle": "Whole-Plant Tinctures",
+            "default_temp_image": "temp-collection-elixirs.webp"
           }
         },
         "collection_2": {
           "type": "collection",
           "settings": {
-            "custom_title": "Botanical Skincare"
+            "custom_title": "Botanical Skincare",
+            "subtitle": "Living Herbal Oils",
+            "default_temp_image": "temp-collection-skincare.webp"
           }
         },
         "collection_3": {
           "type": "collection",
           "settings": {
-            "custom_title": "Herbal Teas & Infusions"
+            "custom_title": "Herbal Teas & Infusions",
+            "subtitle": "Artisanal Loose Leaf",
+            "default_temp_image": "temp-collection-teas.webp"
           }
         }
       },
@@ -41,15 +48,15 @@
         "collection_3"
       ],
       "settings": {
-        "eyebrow": "Botanical Rituals",
+        "eyebrow": "BOTANICAL RITUALS",
         "heading": "Curated Collections",
-        "text": "Explore our hand-formulated categories designed for holistic balance and daily restoration."
+        "text": "Explore our hand-formulated categories designed for holistic balance, deep nourishment, and daily restoration."
       }
     },
     "best_sellers": {
       "type": "best-sellers",
       "settings": {
-        "eyebrow": "Aryvan Essentials",
+        "eyebrow": "ARYVAN ESSENTIALS",
         "heading": "Best Selling Formulations",
         "text": "Time-honored botanical remedies crafted with whole plants, therapeutic essences, and pure natural intention.",
         "products_to_show": 4,
@@ -61,66 +68,62 @@
       "type": "brand-story",
       "settings": {
         "image_position": "left",
-        "background_style": "cream",
-        "eyebrow": "Rooted in Ancient Wisdom",
-        "heading": "The Philosophy of Living Botanicals",
-        "text_paragraph_1": "At Aryvan, botanical wellness is not merely an extraction; it is a sacred dialogue with the earth. We honor the innate intelligence of whole plants, cultivating harmony between ancestral herbalism and contemporary botanical science.",
-        "text_paragraph_2": "Every tincture, elixir, and balm is slow-steeped in small artisanal vessels, ensuring the living phytochemical matrix remains uncompromised and fully resonant.",
-        "quote": "Nature does not hurry, yet everything is accomplished.",
+        "background_style": "ivory",
+        "eyebrow": "ROOTED IN NATURE",
+        "heading": "Rooted in Nature. Refined by Intention.",
+        "text_paragraph_1": "At Aryvan, botanical wellness is rooted in reverence for the earth. We honor the innate complexity of living botanicals, bridging ancestral herbal traditions with meticulous modern craftsmanship.",
+        "text_paragraph_2": "Each formulation is slow-macerated in small artisanal vessels, ensuring delicate volatile essences, terpenes, and plant sterols remain unadulterated and biologically resonant.",
+        "quote": "True wellness is not created in haste. It is distilled through patience, reverence, and nature's quiet wisdom.",
         "quote_author": "Aryvan Botanical Ethos",
-        "button_label": "Discover Our Process"
+        "button_label": "Explore Our Philosophy"
       }
     },
     "botanical_ingredients": {
       "type": "botanical-ingredients",
       "blocks": {
-        "ingredient_1": {
-          "type": "ingredient",
-          "settings": {
-            "icon": "droplet",
-            "tag": "Slow Solar Infusion",
-            "title": "Cold-Pressed & Infused",
-            "description": "Slow maceration preserves delicate enzymes, terpenes, and antioxidants without thermal degradation."
-          }
-        },
-        "ingredient_2": {
-          "type": "ingredient",
+        "pillar_1": {
+          "type": "ingredient_pillar",
           "settings": {
             "icon": "leaf",
-            "tag": "Phytochemical Synergy",
             "title": "Whole-Plant Integrity",
-            "description": "We honor whole flowers, leaves, and roots rather than isolating single chemical compounds."
+            "description": "Utilizing complete botanical aerials, leaves, and roots to preserve the full biological synergy of nature's phytochemical spectrum."
           }
         },
-        "ingredient_3": {
-          "type": "ingredient",
+        "pillar_2": {
+          "type": "ingredient_pillar",
+          "settings": {
+            "icon": "droplet",
+            "title": "Botanical Extraction",
+            "description": "Gentle ambient and cold-oil maceration without extreme thermal degradation, keeping plant sterols and terpenes intact."
+          }
+        },
+        "pillar_3": {
+          "type": "ingredient_pillar",
           "settings": {
             "icon": "sun",
-            "tag": "Living Vitality",
-            "title": "Harmonic Adaptogens",
-            "description": "Time-honored botanical roots and herbs known for encouraging physiological balance and daily resilience."
+            "title": "Thoughtful Formulation",
+            "description": "Harmonious botanical blends composed with intentional ingredient ratios, completely free of synthetic carriers or phthalates."
           }
         },
-        "ingredient_4": {
-          "type": "ingredient",
+        "pillar_4": {
+          "type": "ingredient_pillar",
           "settings": {
             "icon": "shield",
-            "tag": "Pure Standard",
-            "title": "Zero Synthetic Additives",
-            "description": "100% free of artificial fragrances, petroleum fillers, phthalates, synthetic preservatives, and sulfates."
+            "title": "Nature-Inspired Wellness",
+            "description": "Grounded in botanical balance and sensory ritual to foster daily calm, skin vitality, and holistic nourishment."
           }
         }
       },
       "block_order": [
-        "ingredient_1",
-        "ingredient_2",
-        "ingredient_3",
-        "ingredient_4"
+        "pillar_1",
+        "pillar_2",
+        "pillar_3",
+        "pillar_4"
       ],
       "settings": {
-        "eyebrow": "Therapeutic Alchemy",
-        "heading": "Botanical Ingredients & Natural Principles",
-        "text": "We formulate exclusively with whole-plant botanicals, cold infusions, and biodynamic extracts to respect the living essence of nature."
+        "eyebrow": "BOTANICAL EXCELLENCE",
+        "heading": "Whole-Plant Science & Intentional Alchemy",
+        "text": "We formulate exclusively with whole-plant botanicals, cold infusions, and biodynamic extracts to respect the living integrity of nature."
       }
     },
     "brand_values": {
@@ -130,32 +133,32 @@
           "type": "value",
           "settings": {
             "icon": "leaf",
-            "title": "100% Plant-Derived",
-            "text": "Every ingredient originates directly from earth-grown botanicals, unadulterated by synthetic additives."
+            "title": "Thoughtfully Sourced",
+            "text": "Ethically gathered botanicals sourced from regenerative cultivators and conscious wildcrafters."
           }
         },
         "value_2": {
           "type": "value",
           "settings": {
-            "icon": "shield",
-            "title": "Conscious & Cruelty-Free",
-            "text": "We strictly never test on animals and partner exclusively with ethical, fair-trade organic harvesters."
+            "icon": "droplet",
+            "title": "Nature-Inspired Formulations",
+            "text": "Every elixir and balm is formulated with whole plant extracts, unadulterated by synthetic carriers."
           }
         },
         "value_3": {
           "type": "value",
           "settings": {
-            "icon": "droplet",
-            "title": "Amber Glass Packaging",
-            "text": "Bottled in UV-protective recyclable amber glass to shield fragile botanical compounds from photo-oxidation."
+            "icon": "shield",
+            "title": "Conscious Packaging",
+            "text": "Encased in recyclable amber apothecary glass to preserve fragile phyto-nutrients and respect the earth."
           }
         },
         "value_4": {
           "type": "value",
           "settings": {
             "icon": "sun",
-            "title": "Artisanal Small Batches",
-            "text": "Slowly crafted and bottled in limited editions to ensure freshness, vitality, and optimal potency."
+            "title": "Artisanal Attention to Detail",
+            "text": "Compounded slowly in limited batches to ensure exceptional biological integrity and fresh vitality."
           }
         }
       },
@@ -166,60 +169,53 @@
         "value_4"
       ],
       "settings": {
-        "eyebrow": "Our Commitment",
+        "color_theme": "dark",
+        "eyebrow": "OUR COMMITMENT",
         "heading": "Guided by Purity & Reverence"
       }
     },
     "testimonials": {
       "type": "testimonials",
+      "disabled": true,
       "blocks": {
-        "testimonial_1": {
-          "type": "testimonial",
+        "reflection_1": {
+          "type": "reflection",
           "settings": {
-            "quote": "The gentle botanical purity of Aryvan has become an indispensable ritual for my morning meditation and quiet hours.",
+            "quote": "The gentle botanical purity of Aryvan brings a grounding presence to morning meditation and daily restoration.",
             "author": "Elena R.",
-            "subtitle": "Botanical Wellness Member • Portland, OR"
+            "subtitle": "Patron Reflection"
           }
         },
-        "testimonial_2": {
-          "type": "testimonial",
+        "reflection_2": {
+          "type": "reflection",
           "settings": {
-            "quote": "You can immediately distinguish the artisan craft in these small-batch infusions. Clean, grounding, and completely natural.",
+            "quote": "You can immediately distinguish the artisan craft in these small-batch infusions. Clean, unadulterated, and deeply nourishing.",
             "author": "Claire T.",
-            "subtitle": "Verified Patron • Boulder, CO"
-          }
-        },
-        "testimonial_3": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "Packaging in amber glass and respecting whole-plant synergy makes Aryvan stand out in an industry crowded with synthetics.",
-            "author": "Julian M.",
-            "subtitle": "Herbalism Enthusiast • Austin, TX"
+            "subtitle": "Patron Reflection"
           }
         }
       },
       "block_order": [
-        "testimonial_1",
-        "testimonial_2",
-        "testimonial_3"
+        "reflection_1",
+        "reflection_2"
       ],
       "settings": {
-        "eyebrow": "Patron Reflections",
-        "heading": "Words From Our Community",
-        "text": "Reflections from individuals embracing natural plant rituals into their daily rhythm.",
-        "show_stars": true
+        "show_section": false,
+        "eyebrow": "PATRON REFLECTIONS",
+        "heading": "Words From Our Circle",
+        "text": "Reflections from individuals embracing natural plant rituals into their daily rhythm."
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "color_scheme": "sage",
-        "eyebrow": "Stay In Rhythm",
+        "color_scheme": "forest",
+        "eyebrow": "STAY IN RHYTHM",
         "heading": "The Botanical Journal",
-        "text": "Receive seasonal harvest notes, herbal formulations, and exclusive private offerings directly to your inbox.",
+        "text": "Thoughtful notes on botanical rituals, natural beauty and conscious living.",
         "placeholder": "Enter your email address",
         "button_label": "Subscribe",
-        "footer_note": "We respect your quiet space. No synthetic clutter, ever."
+        "footer_note": "We honor your tranquility. Never spam, only quiet herbal wisdom."
       }
     }
   },
