@@ -1,0 +1,218 @@
+<div class="best-sellers full-width">
+  <div class="best-sellers__container">
+    <div class="best-sellers__header">
+      {% if section.settings.eyebrow != blank %}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="best-sellers__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <p class="best-sellers__subtext">{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+
+    {% assign featured_collection = section.settings.collection %}
+
+    {% if featured_collection != blank and featured_collection.products.size > 0 %}
+      <div class="best-sellers__grid best-sellers__grid--cols-{{ section.settings.columns_desktop }}">
+        {% for product in featured_collection.products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_view_all and featured_collection.url != blank %}
+        <div class="best-sellers__footer">
+          <a href="{{ featured_collection.url }}" class="button button-secondary">
+            {{ 'collections.view_collection' | t }}
+          </a>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="best-sellers__empty-state botanical-card">
+        <div class="best-sellers__empty-icon">
+          {{ 'icon-leaf.svg' | inline_asset_content }}
+        </div>
+        <h3 class="best-sellers__empty-title">Pure Formulations in Preparation</h3>
+        <p class="best-sellers__empty-text">
+          {% if featured_collection == blank %}
+            Select a collection in the Shopify Theme Editor to display your curated botanical wellness formulations here.
+          {% else %}
+            {{ 'products.empty' | t }}
+          {% endif %}
+        </p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .best-sellers {
+    padding: 5rem 0;
+    background-color: var(--color-background, #FBF9F5);
+  }
+
+  .best-sellers__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  .best-sellers__header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .best-sellers__heading {
+    margin-bottom: 0.75rem;
+  }
+
+  .best-sellers__subtext {
+    font-size: 1.05rem;
+    color: var(--color-foreground, #232E24);
+    opacity: 0.85;
+  }
+
+  .best-sellers__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .best-sellers__grid--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .best-sellers__grid--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .best-sellers__empty-state {
+    padding: 3.5rem 2rem;
+    text-align: center;
+    max-width: 580px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .best-sellers__empty-icon {
+    color: var(--color-secondary, #5B6E5D);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .best-sellers__empty-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .best-sellers__empty-title {
+    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.5rem;
+    color: var(--color-primary, #263629);
+  }
+
+  .best-sellers__empty-text {
+    font-size: 0.95rem;
+    color: var(--color-foreground, #232E24);
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  .best-sellers__footer {
+    margin-top: 3.5rem;
+    text-align: center;
+  }
+
+  @media (max-width: 1024px) {
+    .best-sellers__grid--cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .best-sellers {
+      padding: 3.5rem 0;
+    }
+    .best-sellers__grid--cols-3,
+    .best-sellers__grid--cols-4 {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Best sellers",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Aryvan Essentials"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best Selling Formulations"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Subtext",
+      "default": "Time-honored botanical remedies crafted with whole plants, therapeutic essences, and pure natural intention."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "options": [
+        {
+          "value": "3",
+          "label": "3 columns"
+        },
+        {
+          "value": "4",
+          "label": "4 columns"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best sellers"
+    }
+  ]
+}
+{% endschema %}

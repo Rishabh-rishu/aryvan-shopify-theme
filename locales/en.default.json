@@ -28,7 +28,26 @@
     }
   },
   "collections": {
-    "title": "Collections"
+    "title": "Collections",
+    "all_collections": "All Collections",
+    "view_collection": "Explore Collection",
+    "empty": "No collections found."
+  },
+  "products": {
+    "empty": "No products available in this collection yet.",
+    "empty_cta": "Add products to this collection in your Shopify admin.",
+    "view_product": "View Details",
+    "from": "From",
+    "sale": "Special Offer",
+    "sold_out": "Harvest Depleted"
+  },
+  "newsletter": {
+    "title": "The Botanical Journal",
+    "subtitle": "Receive seasonal herbal insights, artisanal distillation notes, and private collection previews.",
+    "placeholder": "Enter your email address",
+    "button": "Subscribe",
+    "success": "Thank you for joining our circle. Welcome to Aryvan Botanical Wellness.",
+    "error": "Please provide a valid email address."
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",

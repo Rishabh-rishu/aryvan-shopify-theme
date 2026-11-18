@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Skeleton",
-    "theme_version": "0.1.0",
-    "theme_author": "Shopify",
+    "theme_name": "Aryvan Botanical Wellness",
+    "theme_version": "1.0.0",
+    "theme_author": "Aryvan Botanical Wellness",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
   },
@@ -16,10 +16,16 @@
       },
       {
         "type": "font_picker",
+        "id": "type_heading_font",
+        "default": "cormorant_garamond_n4",
+        "label": "t:general.heading"
+      },
+      {
+        "type": "font_picker",
         "id": "type_primary_font",
         "default": "work_sans_n4",
         "label": "t:general.primary"
-      },
+      }
     ]
   },
   {
@@ -39,7 +45,7 @@
             "label": "t:options.page_width.wide"
           }
         ],
-        "default": "90rem"
+        "default": "110rem"
       },
       {
         "type": "range",
@@ -49,7 +55,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:labels.page_margin",
-        "default": 20
+        "default": 24
       }
     ]
   },
@@ -59,14 +65,44 @@
       {
         "type": "color",
         "id": "background_color",
-        "default": "#FFFFFF",
+        "default": "#FBF9F5",
         "label": "t:labels.background"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#333333",
+        "default": "#232E24",
         "label": "t:labels.foreground"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "default": "#263629",
+        "label": "t:general.primary"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "default": "#5B6E5D",
+        "label": "t:general.secondary"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "default": "#F4EFE6",
+        "label": "t:general.surface"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "default": "#C49A6C",
+        "label": "t:general.accent"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "default": "#E6E1D6",
+        "label": "t:labels.border"
       },
       {
         "type": "range",
@@ -77,6 +113,31 @@
         "unit": "px",
         "label": "t:labels.input_corner_radius",
         "default": 4
+      }
+    ]
+  },
+  {
+    "name": "t:general.social_media",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram_link",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest_link",
+        "label": "Pinterest"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_link",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube_link",
+        "label": "YouTube"
       }
     ]
   }

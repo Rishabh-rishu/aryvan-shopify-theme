@@ -1,55 +1,325 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+<footer class="site-footer full-width" role="contentinfo">
+  <div class="site-footer__container">
+    <div class="site-footer__grid">
+      <!-- Column 1: Brand & Social -->
+      <div class="site-footer__col site-footer__brand-col">
+        <span class="site-footer__brand-title">{{ shop.name }}</span>
+        <span class="site-footer__brand-subtitle">Botanical Wellness</span>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+        {% if section.settings.brand_bio != blank %}
+          <p class="site-footer__bio">{{ section.settings.brand_bio }}</p>
+        {% endif %}
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+        {% if section.settings.show_social_icons %}
+          <div class="site-footer__socials">
+            {% if settings.social_instagram_link != blank %}
+              <a href="{{ settings.social_instagram_link }}" class="site-footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                {{ 'icon-instagram.svg' | inline_asset_content }}
+              </a>
+            {% endif %}
+            {% if settings.social_pinterest_link != blank %}
+              <a href="{{ settings.social_pinterest_link }}" class="site-footer__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
+                {{ 'icon-pinterest.svg' | inline_asset_content }}
+              </a>
+            {% endif %}
+            {% if settings.social_facebook_link != blank %}
+              <a href="{{ settings.social_facebook_link }}" class="site-footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                {{ 'icon-facebook.svg' | inline_asset_content }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Column 2: Navigation 1 -->
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.menu_1_heading | default: 'Apothecary' }}</h4>
+        <ul class="site-footer__nav-list">
+          {% for link in section.settings.menu_1.links %}
+            <li>
+              <a href="{{ link.url }}" class="site-footer__link">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li><a href="{{ routes.all_products_collection_url }}" class="site-footer__link">All Formulations</a></li>
+            <li><a href="{{ routes.collections_url }}" class="site-footer__link">Collections</a></li>
+            <li><a href="#brand-story" class="site-footer__link">Our Story</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Column 3: Navigation 2 / Customer Care -->
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.menu_2_heading | default: 'Guidance & Care' }}</h4>
+        <ul class="site-footer__nav-list">
+          {% for link in section.settings.menu_2.links %}
+            <li>
+              <a href="{{ link.url }}" class="site-footer__link">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li><a href="/pages/botanical-guide" class="site-footer__link">Botanical Guide</a></li>
+            <li><a href="/pages/faq" class="site-footer__link">Ritual Consultation</a></li>
+            <li><a href="/policies/shipping-policy" class="site-footer__link">Shipping & Care</a></li>
+            <li><a href="/policies/privacy-policy" class="site-footer__link">Privacy Policy</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Column 4: Studio & Inquiries -->
+      <div class="site-footer__col">
+        <h4 class="site-footer__heading">{{ section.settings.contact_heading | default: 'Inquiries' }}</h4>
+        <div class="site-footer__contact">
+          {% if section.settings.contact_email != blank %}
+            <p>
+              <span class="site-footer__contact-label">Consultation & Care:</span>
+              <a href="mailto:{{ section.settings.contact_email }}" class="site-footer__link">{{ section.settings.contact_email }}</a>
+            </p>
+          {% endif %}
+          {% if section.settings.contact_hours != blank %}
+            <p>
+              <span class="site-footer__contact-label">Studio Hours:</span>
+              <span>{{ section.settings.contact_hours }}</span>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="site-footer__bottom">
+      <div class="site-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. Formulated with living botanical intention.
+      </div>
+
+      {% if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 %}
+        <div class="site-footer__payment" aria-label="Accepted payment methods">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .site-footer {
+    background-color: var(--color-surface, #F4EFE6);
+    border-top: 1px solid var(--color-border, #E6E1D6);
+    padding: 5rem 0 2.5rem;
+    color: var(--color-foreground, #232E24);
   }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
+
+  .site-footer__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
   }
-  footer .footer__links,
-  footer .footer__payment {
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 3.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .site-footer__brand-title {
+    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.6rem;
+    color: var(--color-primary, #263629);
+    display: block;
+    line-height: 1.2;
+  }
+
+  .site-footer__brand-subtitle {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-secondary, #5B6E5D);
+    display: block;
+    margin-top: 0.2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .site-footer__bio {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    opacity: 0.85;
+    max-width: 320px;
+    margin-bottom: 1.5rem;
+  }
+
+  .site-footer__socials {
     display: flex;
     gap: 1rem;
+    align-items: center;
+  }
+
+  .site-footer__social-link {
+    color: var(--color-primary, #263629);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .site-footer__social-link:hover {
+    color: var(--color-secondary, #5B6E5D);
+    transform: translateY(-2px);
+  }
+
+  .site-footer__social-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .site-footer__heading {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary, #263629);
+    margin-bottom: 1.25rem;
+  }
+
+  .site-footer__nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .site-footer__link {
+    text-decoration: none;
+    color: var(--color-foreground, #232E24);
+    font-size: 0.9rem;
+    opacity: 0.85;
+    transition: color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .site-footer__link:hover {
+    color: var(--color-secondary, #5B6E5D);
+    opacity: 1;
+  }
+
+  .site-footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .site-footer__contact-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-secondary, #5B6E5D);
+    margin-bottom: 0.25rem;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-border, #E6E1D6);
+    padding-top: 2rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .site-footer__payment {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .site-footer {
+      padding: 3.5rem 0 2rem;
+    }
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+    .site-footer__bottom {
+      flex-direction: column;
+      gap: 1.25rem;
+      text-align: center;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "Footer",
   "settings": [
     {
+      "type": "textarea",
+      "id": "brand_bio",
+      "label": "Brand bio / mission",
+      "default": "Pure living botanicals crafted with ancient wisdom and modern reverence. Harmonizing body, spirit, and nature."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_icons",
+      "label": "Show social media icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "menu_1_heading",
+      "label": "First menu heading",
+      "default": "Apothecary"
+    },
+    {
       "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "id": "menu_1",
+      "label": "First menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_2_heading",
+      "label": "Second menu heading",
+      "default": "Guidance & Care"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "Second menu"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact heading",
+      "default": "Inquiries"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email",
+      "default": "wellness@aryvan.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_hours",
+      "label": "Studio hours",
+      "default": "Monday – Friday: 9am – 5pm PST"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
+      "label": "Show payment icons",
       "default": true
     }
   ]

@@ -1,0 +1,215 @@
+<section class="brand-values full-width">
+  <div class="brand-values__container">
+    {% if section.settings.heading != blank %}
+      <div class="brand-values__header">
+        {% if section.settings.eyebrow != blank %}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {% endif %}
+        <h2 class="brand-values__heading">{{ section.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="brand-values__grid">
+      {% for block in section.blocks %}
+        <div class="brand-values__item" {{ block.shopify_attributes }}>
+          <div class="brand-values__icon">
+            {% case block.settings.icon %}
+              {% when 'droplet' %}
+                {{ 'icon-droplet.svg' | inline_asset_content }}
+              {% when 'sun' %}
+                {{ 'icon-sun.svg' | inline_asset_content }}
+              {% when 'shield' %}
+                {{ 'icon-shield.svg' | inline_asset_content }}
+              {% else %}
+                {{ 'icon-leaf.svg' | inline_asset_content }}
+            {% endcase %}
+          </div>
+          <h3 class="brand-values__title">{{ block.settings.title }}</h3>
+          <p class="brand-values__text">{{ block.settings.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .brand-values {
+    padding: 5rem 0;
+    background-color: var(--color-surface, #F4EFE6);
+    border-top: 1px solid var(--color-border, #E6E1D6);
+    border-bottom: 1px solid var(--color-border, #E6E1D6);
+  }
+
+  .brand-values__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  .brand-values__header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 3.5rem;
+  }
+
+  .brand-values__heading {
+    margin-bottom: 0.5rem;
+  }
+
+  .brand-values__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+
+  .brand-values__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .brand-values__icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #E8EFE7;
+    color: var(--color-primary, #263629);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    transition: transform 0.3s ease;
+  }
+
+  .brand-values__item:hover .brand-values__icon {
+    transform: scale(1.08);
+  }
+
+  .brand-values__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-values__title {
+    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.25rem;
+    color: var(--color-primary, #263629);
+    margin-bottom: 0.5rem;
+  }
+
+  .brand-values__text {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--color-foreground, #232E24);
+    opacity: 0.85;
+  }
+
+  @media (max-width: 1024px) {
+    .brand-values__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .brand-values {
+      padding: 3.5rem 0;
+    }
+    .brand-values__grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Brand values",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our Commitment"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Guided by Purity & Reverence"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value pillar",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "droplet", "label": "Droplet" },
+            { "value": "sun", "label": "Sun" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "100% Plant-Derived"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Formulated purely with whole plant extracts, raw cold-pressed oils, and certified organic botanicals."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand values",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "icon": "leaf",
+            "title": "100% Plant-Derived",
+            "text": "Every ingredient originates directly from earth-grown botanicals, unadulterated by synthetic additives."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "shield",
+            "title": "Conscious & Cruelty-Free",
+            "text": "We strictly never test on animals and partner exclusively with ethical, fair-trade organic harvesters."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "droplet",
+            "title": "Amber Glass Packaging",
+            "text": "Bottled in UV-protective recyclable amber glass to shield fragile botanical compounds from photo-oxidation."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "sun",
+            "title": "Artisanal Small Batches",
+            "text": "Slowly crafted and bottled in limited editions to ensure freshness, vitality, and optimal potency."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

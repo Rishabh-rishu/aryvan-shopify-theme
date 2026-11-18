@@ -1,9 +1,13 @@
-/** Critical CSS for the theme. This file is included on every page. */
+/** Critical CSS for Aryvan Botanical Wellness theme. */
 
-/* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
+/* Reset styles */
 * {
   box-sizing: border-box;
   margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -11,6 +15,12 @@ body {
   flex-direction: column;
   margin: 0;
   min-height: 100svh;
+  font-family: var(--font-primary--family, -apple-system, BlinkMacSystemFont, sans-serif);
+  background-color: var(--color-background, #FBF9F5);
+  color: var(--color-foreground, #232E24);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
@@ -29,7 +39,8 @@ svg {
 
 input,
 textarea,
-select {
+select,
+button {
   font: inherit;
   border-radius: var(--style-border-radius-inputs);
 }
@@ -42,11 +53,15 @@ select {
 dialog {
   background-color: var(--color-background);
   color: var(--color-foreground);
+  border: 1px solid var(--color-border);
 }
 
 p {
   text-wrap: pretty;
+  font-size: 1rem;
+  color: var(--color-foreground);
 }
+
 p,
 h1,
 h2,
@@ -71,26 +86,102 @@ p:empty {
   margin-block-end: 0;
 }
 
-/** Theme styles below */
-body {
-  font-family: var(--font-primary--family);
-  background-color: var(--color-background);
+/* Editorial Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.editorial-heading {
+  font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+  font-style: var(--font-heading--style, normal);
+  font-weight: 400;
+  line-height: 1.25;
   color: var(--color-foreground);
+  letter-spacing: -0.015em;
 }
 
-/** Section layout utilities */
+h1 {
+  font-size: clamp(2.25rem, 4vw + 1rem, 3.75rem);
+  line-height: 1.15;
+}
 
-/**
- * Setup a grid that enables both full-width and constrained layouts
- * depending on the class of the child elements.
- *
- * By default, a minimum content margin is set on the left and right
- * sides of the section and the content is centered in the viewport to
- * not exceed the maximum page width.
- *
- * When a child element is given the `full-width` class, it will span
- * the entire viewport.
- */
+h2 {
+  font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw + 0.25rem, 1.75rem);
+}
+
+h4 {
+  font-size: 1.15rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-primary--family);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 0.75rem;
+}
+
+/* Accessibility Focus */
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+/* Botanical Buttons */
+.button,
+.button-primary,
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-family: var(--font-primary--family);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--style-border-radius-inputs);
+  transition: all 0.25s var(--transition-timing, ease);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button-primary {
+  background-color: var(--color-primary);
+  color: #FBF9F5;
+  border: 1px solid var(--color-primary);
+}
+
+.button-primary:hover {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: #FFFFFF;
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.button-secondary:hover {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+}
+
+/* Section layout utilities */
 .shopify-section {
   --content-width: min(
     calc(var(--page-width) - var(--page-margin) * 2),
@@ -99,19 +190,29 @@ body {
   --content-margin: minmax(var(--page-margin), 1fr);
   --content-grid: var(--content-margin) var(--content-width) var(--content-margin);
 
-  /* This is required to make <img> elements work as background images */
   position: relative;
   grid-template-columns: var(--content-grid);
   display: grid;
   width: 100%;
 }
 
-/* Child elements, by default, are constrained to the central column of the grid. */
 .shopify-section > * {
   grid-column: 2;
 }
 
-/* Child elements that use the full-width utility class span the entire viewport. */
 .shopify-section > .full-width {
   grid-column: 1 / -1;
+}
+
+/* Shared botanical card styles */
+.botanical-card {
+  background-color: var(--color-surface, #F4EFE6);
+  border: 1px solid var(--color-border, #E6E1D6);
+  border-radius: var(--style-border-radius-cards, 10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.botanical-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(35, 46, 36, 0.06);
 }

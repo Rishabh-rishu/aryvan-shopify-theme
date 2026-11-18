@@ -1,9 +1,13 @@
 {
   "general": {
     "404": "Not found",
+    "accent": "Accent",
+    "announcement_bar": "Announcement bar",
     "article": "Article",
     "block": "Block",
     "blog": "Blog",
+    "brand_story": "Brand story",
+    "brand_values": "Brand values",
     "cart": "Cart",
     "collection": "Collection",
     "collections": "Collections",
@@ -13,12 +17,18 @@
     "column": "Column",
     "content": "Content",
     "custom_section": "Custom section",
+    "featured_collections": "Featured collections",
+    "featured_products": "Best sellers",
     "fonts": "Fonts",
     "footer": "Footer",
     "group": "Group",
     "header": "Header",
+    "heading": "Heading",
+    "hero_banner": "Hero banner",
+    "ingredients": "Botanical ingredients",
     "layout": "Layout",
     "main": "Main",
+    "newsletter": "Newsletter",
     "page": "Page",
     "password": "Password",
     "primary": "Primary",
@@ -29,6 +39,9 @@
     "section": "Section",
     "settings": "Settings",
     "sidebar": "Sidebar",
+    "social_media": "Social media",
+    "surface": "Surface",
+    "testimonials": "Testimonials",
     "text": "Text",
     "theme": "Theme",
     "typography": "Typography"
@@ -36,18 +49,25 @@
   "labels": {
     "alignment": "Alignment",
     "background": "Background",
+    "border": "Border",
+    "button_label": "Button label",
+    "button_link": "Button link",
     "foreground": "Foreground",
     "grid_gap": "Grid spacing",
     "grid_item_width": "Grid item width",
+    "heading": "Heading",
+    "image": "Image",
     "input_corner_radius": "Input corner radius",
     "layout_direction": "Layout direction",
     "menu": "Menu",
+    "message": "Message",
     "padding": "Padding",
     "page_margin": "Page margin",
     "page_width": "Page width",
     "show_payment_icons": "Show payment icons",
-    "text_style": "Text style",
-    "text": "Text"
+    "subheading": "Subheading",
+    "text": "Text",
+    "text_style": "Text style"
   },
   "options": {
     "alignment": {
@@ -71,6 +91,6 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
+    }
   }
 }
