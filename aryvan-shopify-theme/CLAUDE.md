@@ -1,0 +1,1 @@
+/home/rishabh/shopify-aryvan/project/aryvan-shopify-theme/AGENTS.md
