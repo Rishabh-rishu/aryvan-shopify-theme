@@ -1,41 +1,354 @@
 {% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+  Aryvan Botanical Wellness - Luxury Collection Template
+  Renders collection / catalog page with responsive editorial product grid and empty state.
 {% endcomment %}
 
-<h1>{{ collection.title }}</h1>
+<section class="collection-section full-width">
+  <div class="collection-section__container">
+    {% comment %} Breadcrumbs {% endcomment %}
+    <nav class="collection-breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}" class="collection-breadcrumbs__link">Home</a>
+      <span class="collection-breadcrumbs__sep" aria-hidden="true">/</span>
+      <span class="collection-breadcrumbs__current" aria-current="page">{{ collection.title | default: 'Catalog' }}</span>
+    </nav>
 
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
+    {% comment %} Header {% endcomment %}
+    <div class="collection-header">
+      <span class="eyebrow collection-header__eyebrow">BOTANICAL HARVESTS</span>
+      <h1 class="collection-header__title">{{ collection.title | default: 'All Formulations' }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-header__description rte">{{ collection.description }}</div>
+      {% else %}
+        <p class="collection-header__subtext">
+          Pure, unadulterated botanical powders and natural wellness ingredients formulated with whole-plant integrity.
+        </p>
+      {% endif %}
+    </div>
+
+    {% comment %} Collection Toolbar {% endcomment %}
+    <div class="collection-toolbar">
+      <span class="collection-toolbar__count">
+        {{ collection.products_count }}
+        {% if collection.products_count == 1 %}
+          formulation
+        {% else %}
+          formulations
         {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
-        </div>
-      </div>
-    {% endfor %}
+      </span>
 
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
+      {% if collection.products_count > 1 and collection.sort_options.size > 0 %}
+        <div class="collection-toolbar__sort">
+          <label for="SortBy" class="collection-toolbar__sort-label">Sort by:</label>
+          <select
+            id="SortBy"
+            name="sort_by"
+            class="collection-toolbar__sort-select"
+            aria-label="Sort collection products"
+            onchange="var p = new URLSearchParams(window.location.search); p.set('sort_by', this.value); p.delete('page'); window.location.search = p.toString();"
+          >
+            {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+            {% for option in collection.sort_options %}
+              <option
+                value="{{ option.value }}"
+                {% if option.value == current_sort %}
+                  selected="selected"
+                {% endif %}
+              >
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %} Products Grid & Empty State {% endcomment %}
+    {% paginate collection.products by 24 %}
+      {% if collection.products.size > 0 %}
+        <div class="collection-grid">
+          {% for product in collection.products %}
+            <div class="collection-grid__item">
+              {% render 'product-card', product: product %}
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <nav class="collection-pagination" aria-label="Pagination">
+            {{ paginate | default_pagination }}
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="collection-empty">
+          <div class="collection-empty__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 0 1 10 10c0 5.25-3.5 8.5-8.5 9.5-1.5.3-3.5.5-4.5.5C4 22 2 19 2 12A10 10 0 0 1 12 2z"/>
+              <path d="M7 12c1.5-2 3.5-3 5-3s3.5 1 5 3"/>
+              <path d="M12 9v9"/>
+            </svg>
+          </div>
+          <h2 class="collection-empty__heading">Fresh Botanical Harvests in Preparation</h2>
+          <p class="collection-empty__text">
+            Our whole-plant formulations are currently slow-macerating and compounding in small artisanal batches. Once configured in Shopify Admin, they will appear here automatically.
+          </p>
+          <a href="{{ routes.root_url }}" class="btn btn--primary collection-empty__btn">
+            Return to Homepage
+          </a>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
 
 {% stylesheet %}
-  .collection-products {
+  .collection-section {
+    padding: 3rem 0 7rem;
+    background-color: var(--color-bg, #F8F5EF);
+    min-height: 70vh;
+  }
+
+  .collection-section__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  /* Breadcrumbs */
+  .collection-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, #7A8478);
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .collection-breadcrumbs__link {
+    color: var(--color-text-muted, #7A8478);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .collection-breadcrumbs__link:hover {
+    color: var(--color-primary, #1F3025);
+  }
+
+  .collection-breadcrumbs__sep {
+    opacity: 0.4;
+  }
+
+  .collection-breadcrumbs__current {
+    color: var(--color-primary, #1F3025);
+    font-weight: 500;
+  }
+
+  /* Header */
+  .collection-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .collection-header__eyebrow {
+    margin-bottom: 0.6rem;
+    color: var(--color-olive, #69775C);
+  }
+
+  .collection-header__title {
+    font-family: var(--font-heading-family);
+    font-size: clamp(2.2rem, 3.8vw, 3.25rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--color-primary, #1F3025);
+    margin: 0 0 1rem;
+  }
+
+  .collection-header__subtext,
+  .collection-header__description {
+    font-family: var(--font-body-family);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text-muted, #5A6258);
+    max-width: 720px;
+    margin: 0;
+  }
+
+  /* Toolbar */
+  .collection-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border, #E4DDD1);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, #7A8478);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .collection-toolbar__count {
+    font-weight: 500;
+  }
+
+  .collection-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .collection-toolbar__sort-label {
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .collection-toolbar__sort-select {
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--color-border, #E4DDD1);
+    border-radius: 3px;
+    background-color: var(--color-surface, #F1EADF);
+    color: var(--color-primary, #1F3025);
+    font-family: var(--font-body-family);
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .collection-toolbar__sort-select:focus {
+    border-color: var(--color-primary, #1F3025);
+  }
+
+  /* Product Grid */
+  .collection-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .collection-grid__item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Pagination */
+  .collection-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .collection-pagination .pagination {
+    display: inline-flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .collection-pagination a,
+  .collection-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--color-border, #E4DDD1);
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--color-primary, #1F3025);
+    background-color: var(--color-surface, #F1EADF);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .collection-pagination a:hover {
+    border-color: var(--color-primary, #1F3025);
+    background-color: #ECE5D8;
+  }
+
+  .collection-pagination .current {
+    background-color: var(--color-primary, #1F3025);
+    color: var(--color-bg, #F8F5EF);
+    border-color: var(--color-primary, #1F3025);
+    font-weight: 600;
+  }
+
+  /* Empty State */
+  .collection-empty {
+    text-align: center;
+    padding: 5rem 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .collection-empty__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--color-surface, #F1EADF);
+    color: var(--color-accent, #C7A77A);
+  }
+
+  .collection-empty__heading {
+    font-family: var(--font-heading-family);
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--color-primary, #1F3025);
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+
+  .collection-empty__text {
+    font-family: var(--font-body-family);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text-muted, #5A6258);
+    margin: 0 0 2.25rem;
+  }
+
+  .collection-empty__btn {
+    display: inline-block;
+    padding: 0.9rem 2.25rem;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 1024px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .collection-section {
+      padding: 2.5rem 0 5rem;
+    }
+
+    .collection-grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .collection-toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
   }
 {% endstylesheet %}
 
