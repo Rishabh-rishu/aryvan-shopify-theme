@@ -1,50 +1,803 @@
 {% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
+  Aryvan Botanical Wellness - Luxury Product Detail Page (PDP)
+  Dynamic Shopify Online Store 2.0 Product Experience
 {% endcomment %}
 
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
-</div>
+{% assign current_variant = product.selected_or_first_available_variant %}
 
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
+<section class="product-pdp full-width" data-section-id="{{ section.id }}" data-section-type="product">
+  <div class="product-pdp__container">
+    {% comment %} Breadcrumbs {% endcomment %}
+    <nav class="product-pdp__breadcrumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="product-pdp__breadcrumb-sep" aria-hidden="true">/</span>
+      {% if collection %}
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+        <span class="product-pdp__breadcrumb-sep" aria-hidden="true">/</span>
+      {% else %}
+        <span>Botanical Harvests</span>
+        <span class="product-pdp__breadcrumb-sep" aria-hidden="true">/</span>
+      {% endif %}
+      <span class="product-pdp__breadcrumb-current" aria-current="page">{{ product.title | default: 'Botanical Powder' }}</span>
+    </nav>
 
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
+    <div class="product-pdp__grid">
+      {% comment %} Left Column: Gallery {% endcomment %}
+      <div class="product-pdp__media-column">
+        <div class="product-gallery" id="ProductGallery-{{ section.id }}">
+          <div class="product-gallery__main">
+            {% if product.featured_image != blank %}
+              <div class="product-gallery__main-image-wrap">
+                <img
+                  id="ProductMainImage-{{ section.id }}"
+                  src="{{ product.featured_image | image_url: width: 1400 }}"
+                  alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                  class="product-gallery__main-img"
+                  width="1400"
+                  height="1400"
+                  loading="eager"
+                >
+              </div>
+            {% else %}
+              {% comment %} Graceful temporary high-res botanical photography fallback {% endcomment %}
+              {% assign temp_image = 'temp-product-spirulina.webp' %}
+              {% if product.title contains 'Moringa' %}
+                {% assign temp_image = 'temp-product-moringa.webp' %}
+              {% elsif product.title contains 'Sea Buckthorn' %}
+                {% assign temp_image = 'temp-product-sea-buckthorn.webp' %}
+              {% endif %}
 
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
+              <div class="product-gallery__main-image-wrap">
+                <img
+                  id="ProductMainImage-{{ section.id }}"
+                  src="{{ temp_image | asset_url }}"
+                  alt="{{ product.title | default: 'Aryvan Botanical Formulation' | escape }}"
+                  class="product-gallery__main-img"
+                  width="1400"
+                  height="1400"
+                  loading="eager"
+                >
+              </div>
+            {% endif %}
+          </div>
+
+          {% if product.images.size > 1 %}
+            <div class="product-gallery__thumbnails" role="list" aria-label="Product thumbnails">
+              {% for image in product.images %}
+                <button
+                  type="button"
+                  class="product-gallery__thumbnail-btn {% if forloop.first %}is-active{% endif %}"
+                  data-target-src="{{ image | image_url: width: 1400 }}"
+                  data-target-alt="{{ image.alt | default: product.title | escape }}"
+                  aria-label="View product image {{ forloop.index }}"
+                >
+                  <img
+                    src="{{ image | image_url: width: 240, height: 240, crop: 'center' }}"
+                    alt="{{ image.alt | default: product.title | escape }}"
+                    width="120"
+                    height="120"
+                    loading="lazy"
+                  >
+                </button>
+              {% endfor %}
+            </div>
           {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
+        </div>
+      </div>
 
-    <input type="text" name="quantity" min="1" value="1">
+      {% comment %} Right Column: Product Details & Purchase Form {% endcomment %}
+      <div class="product-pdp__details-column">
+        <div class="product-details">
+          <div class="product-details__header">
+            <span class="eyebrow product-details__eyebrow">
+              {{ product.type | default: 'Pure Botanical Harvest' }}
+            </span>
+            <h1 class="product-details__title">{{ product.title }}</h1>
 
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+            <div class="product-details__price-row" id="ProductPrice-{{ section.id }}">
+              {% if product.price > 0 %}
+                <div class="product-details__price">
+                  <span class="product-details__current-price">{{ current_variant.price | money }}</span>
+                  {% if current_variant.compare_at_price > current_variant.price %}
+                    <s class="product-details__compare-price">{{ current_variant.compare_at_price | money }}</s>
+                  {% endif %}
+                </div>
+              {% else %}
+                <div class="product-details__price-inquire">
+                  <span class="product-details__status-tag">Harvest In Progress</span>
+                  <span class="product-details__inquire-text">Direct inquiry or allocation upon release</span>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if product.description != blank %}
+            <div class="product-details__summary">
+              <div class="rte">{{ product.description }}</div>
+            </div>
+          {% else %}
+            <div class="product-details__summary">
+              <p class="product-details__excerpt">
+                An intentional single-origin harvest processed with whole-plant integrity to preserve natural biological vitality and restorative aroma.
+              </p>
+            </div>
+          {% endif %}
+
+          <div class="product-details__form-wrapper">
+            {% form 'product', product, id: 'product-form-pdp', class: 'product-form' %}
+              {% if product.has_only_default_variant == false %}
+                <div class="product-form__variants">
+                  {% for option in product.options_with_values %}
+                    <div class="product-form__option">
+                      <label class="product-form__option-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                        {{ option.name }}:
+                        <span class="product-form__selected-value">{{ option.selected_value }}</span>
+                      </label>
+                      <div class="product-form__select-wrapper">
+                        <select
+                          id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                          name="options[{{ option.name | escape }}]"
+                          class="product-form__select"
+                        >
+                          {% for value in option.values %}
+                            <option
+                              value="{{ value | escape }}"
+                              {% if option.selected_value == value %}selected="selected"{% endif %}
+                            >
+                              {{ value }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              <input type="hidden" name="id" value="{{ current_variant.id }}" id="ProductSelect-{{ section.id }}">
+
+              <div class="product-form__purchase-row">
+                <div class="quantity-selector" data-quantity-selector>
+                  <label class="sr-only" for="Quantity-{{ section.id }}">Quantity</label>
+                  <button type="button" class="quantity-selector__btn quantity-selector__minus" aria-label="Decrease quantity" data-qty-decrement>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  </button>
+                  <input
+                    type="number"
+                    name="quantity"
+                    id="Quantity-{{ section.id }}"
+                    class="quantity-selector__input"
+                    value="1"
+                    min="1"
+                    aria-label="Quantity"
+                    data-qty-input
+                  >
+                  <button type="button" class="quantity-selector__btn quantity-selector__plus" aria-label="Increase quantity" data-qty-increment>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  </button>
+                </div>
+
+                <div class="product-form__cta">
+                  <button
+                    type="submit"
+                    name="add"
+                    class="btn btn--primary product-form__submit-btn"
+                    {% unless current_variant.available %}disabled{% endunless %}
+                  >
+                    <span>
+                      {% if current_variant.available %}
+                        Add to Cart
+                      {% else %}
+                        Currently Reserved
+                      {% endif %}
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {% if section.settings.show_dynamic_checkout and current_variant.available %}
+                <div class="product-form__payment-button">
+                  {{ form | payment_button }}
+                </div>
+              {% endif %}
+            {% endform %}
+          </div>
+
+          {% comment %} Botanical Assurances {% endcomment %}
+          <div class="product-assurances">
+            <div class="product-assurances__item">
+              <svg class="product-assurances__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2a10 10 0 0 1 10 10c0 5.25-3.5 8.5-8.5 9.5-1.5.3-3.5.5-4.5.5C4 22 2 19 2 12A10 10 0 0 1 12 2z"/>
+                <path d="M7 12c1.5-2 3.5-3 5-3s3.5 1 5 3"/>
+              </svg>
+              <span>100% Whole-Plant Botanical</span>
+            </div>
+            <div class="product-assurances__item">
+              <svg class="product-assurances__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>Purity & Synergy Preserved</span>
+            </div>
+            <div class="product-assurances__item">
+              <svg class="product-assurances__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+              <span>Zero Artificial Additives</span>
+            </div>
+          </div>
+
+          {% comment %} Product Accordions {% endcomment %}
+          <div class="product-accordions">
+            <details class="product-accordion" open>
+              <summary class="product-accordion__header">
+                <span class="product-accordion__title">Ritual & Daily Usage</span>
+                <span class="product-accordion__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="product-accordion__content">
+                <p>{{ section.settings.ritual_text }}</p>
+              </div>
+            </details>
+
+            <details class="product-accordion">
+              <summary class="product-accordion__header">
+                <span class="product-accordion__title">Botanical Ingredients</span>
+                <span class="product-accordion__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="product-accordion__content">
+                <p>{{ section.settings.ingredients_text }}</p>
+              </div>
+            </details>
+
+            <details class="product-accordion">
+              <summary class="product-accordion__header">
+                <span class="product-accordion__title">Shipping, Storage & Care</span>
+                <span class="product-accordion__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="product-accordion__content">
+                <p>{{ section.settings.storage_text }}</p>
+              </div>
+            </details>
+          </div>
+
+          {% comment %} Contact & Inquiries Link {% endcomment %}
+          <div class="product-details__support">
+            <p>
+              Have questions regarding this formulation?
+              <a href="{{ routes.root_url }}#contact" class="product-details__support-link">
+                Speak directly with our team &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gallery thumbnail switcher
+    const thumbnails = document.querySelectorAll('.product-gallery__thumbnail-btn');
+    const mainImg = document.querySelector('.product-gallery__main-img');
+
+    if (thumbnails.length && mainImg) {
+      thumbnails.forEach(btn => {
+        btn.addEventListener('click', function() {
+          thumbnails.forEach(t => t.classList.remove('is-active'));
+          this.classList.add('is-active');
+          const targetSrc = this.getAttribute('data-target-src');
+          const targetAlt = this.getAttribute('data-target-alt');
+          if (targetSrc) mainImg.setAttribute('src', targetSrc);
+          if (targetAlt) mainImg.setAttribute('alt', targetAlt);
+        });
+      });
+    }
+
+    // Quantity selector buttons
+    const qtySelectors = document.querySelectorAll('[data-quantity-selector]');
+    qtySelectors.forEach(container => {
+      const input = container.querySelector('[data-qty-input]');
+      const minus = container.querySelector('[data-qty-decrement]');
+      const plus = container.querySelector('[data-qty-increment]');
+
+      if (input && minus && plus) {
+        minus.addEventListener('click', () => {
+          let val = parseInt(input.value, 10) || 1;
+          if (val > 1) {
+            input.value = val - 1;
+            input.dispatchEvent(new Event('change'));
+          }
+        });
+
+        plus.addEventListener('click', () => {
+          let val = parseInt(input.value, 10) || 1;
+          input.value = val + 1;
+          input.dispatchEvent(new Event('change'));
+        });
+      }
+    });
+  });
+{% endjavascript %}
+
+{% stylesheet %}
+  .product-pdp {
+    padding: 3rem 0 7rem;
+    background-color: var(--color-bg, #F8F5EF);
+  }
+
+  .product-pdp__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  /* Breadcrumbs */
+  .product-pdp__breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, #7A8478);
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .product-pdp__breadcrumbs a {
+    color: var(--color-text-muted, #7A8478);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .product-pdp__breadcrumbs a:hover {
+    color: var(--color-primary, #1F3025);
+  }
+
+  .product-pdp__breadcrumb-sep {
+    opacity: 0.4;
+  }
+
+  .product-pdp__breadcrumb-current {
+    color: var(--color-primary, #1F3025);
+    font-weight: 500;
+  }
+
+  /* Grid Layout */
+  .product-pdp__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 4.5rem;
+    align-items: flex-start;
+  }
+
+  /* Gallery */
+  .product-gallery {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .product-gallery__main-image-wrap {
+    background-color: var(--color-surface, #F1EADF);
+    border: 1px solid var(--color-border, #E4DDD1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-gallery__main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .product-gallery__main-image-wrap:hover .product-gallery__main-img {
+    transform: scale(1.02);
+  }
+
+  .product-gallery__thumbnails {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .product-gallery__thumbnail-btn {
+    border: 1px solid var(--color-border, #E4DDD1);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  .product-gallery__thumbnail-btn:hover,
+  .product-gallery__thumbnail-btn.is-active {
+    opacity: 1;
+    border-color: var(--color-primary, #1F3025);
+  }
+
+  .product-gallery__thumbnail-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Details Column */
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .product-details__eyebrow {
+    margin-bottom: 0.6rem;
+  }
+
+  .product-details__title {
+    font-family: var(--font-heading-family);
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-primary, #1F3025);
+    margin: 0 0 1rem;
+  }
+
+  .product-details__price-row {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .product-details__price {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .product-details__current-price {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-primary, #1F3025);
+  }
+
+  .product-details__compare-price {
+    font-size: 1.1rem;
+    color: var(--color-text-muted, #7A8478);
+  }
+
+  .product-details__price-inquire {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .product-details__status-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background-color: rgba(199, 167, 122, 0.15);
+    color: #8C6A36;
+    padding: 0.35rem 0.8rem;
+    border-radius: 2px;
+  }
+
+  .product-details__inquire-text {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--color-text-muted, #5A6258);
+  }
+
+  .product-details__summary {
+    font-family: var(--font-body-family);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text-muted, #4A5248);
+  }
+
+  /* Form & Purchase Controls */
+  .product-details__form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .product-form__variants {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .product-form__option-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary, #1F3025);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-form__selected-value {
+    font-weight: 400;
+    color: var(--color-text-muted, #7A8478);
+  }
+
+  .product-form__select {
+    width: 100%;
+    max-width: 380px;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-surface, #F1EADF);
+    color: var(--color-primary, #1F3025);
+    font-family: var(--font-body-family);
+    font-size: 0.95rem;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .product-form__select:focus {
+    border-color: var(--color-primary, #1F3025);
+  }
+
+  .product-form__purchase-row {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  /* Quantity Selector */
+  .quantity-selector {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-border, #E4DDD1);
+    border-radius: 3px;
+    background-color: var(--color-surface, #F1EADF);
+    height: 52px;
+  }
+
+  .quantity-selector__btn {
+    width: 44px;
+    height: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary, #1F3025);
+    transition: background-color 0.2s ease;
+  }
+
+  .quantity-selector__btn:hover {
+    background-color: rgba(31, 48, 37, 0.05);
+  }
+
+  .quantity-selector__input {
+    width: 48px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary, #1F3025);
+    outline: none;
+    -moz-appearance: textfield;
+  }
+
+  .quantity-selector__input::-webkit-outer-spin-button,
+  .quantity-selector__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .product-form__cta {
+    flex-grow: 1;
+  }
+
+  .product-form__submit-btn {
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .product-form__payment-button {
+    margin-top: 0.75rem;
+  }
+
+  /* Assurances */
+  .product-assurances {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border, #E4DDD1);
+    border-bottom: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .product-assurances__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-primary, #1F3025);
+  }
+
+  .product-assurances__icon {
+    width: 22px;
+    height: 22px;
+    color: var(--color-accent, #C7A77A);
+  }
+
+  /* Accordions */
+  .product-accordions {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-accordion {
+    border-bottom: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .product-accordion__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .product-accordion__header::-webkit-details-marker {
+    display: none;
+  }
+
+  .product-accordion__title {
+    font-family: var(--font-heading-family);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-primary, #1F3025);
+  }
+
+  .product-accordion__icon {
+    width: 12px;
+    height: 12px;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+
+  .product-accordion__icon::before,
+  .product-accordion__icon::after {
+    content: '';
+    position: absolute;
+    background-color: var(--color-primary, #1F3025);
+    transition: transform 0.3s ease;
+  }
+
+  .product-accordion__icon::before {
+    top: 5px;
+    left: 0;
+    width: 12px;
+    height: 1.5px;
+  }
+
+  .product-accordion__icon::after {
+    top: 0;
+    left: 5px;
+    width: 1.5px;
+    height: 12px;
+  }
+
+  .product-accordion[open] .product-accordion__icon::after {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  .product-accordion__content {
+    padding-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text-muted, #5A6258);
+  }
+
+  /* Support Link */
+  .product-details__support {
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #7A8478);
+  }
+
+  .product-details__support-link {
+    color: var(--color-primary, #1F3025);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .product-details__support-link:hover {
+    color: var(--color-accent, #C7A77A);
+  }
+
+  @media (max-width: 900px) {
+    .product-pdp__grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .product-gallery {
+      position: static;
+    }
+
+    .product-assurances {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .product-assurances__item {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.product",
-  "settings": [],
+  "name": "Product detail page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout button",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "ritual_text",
+      "label": "Ritual & daily usage text",
+      "default": "Blend 1 level teaspoon (approx. 3-5g) into warm plant milk, fresh morning smoothies, or water. Best enjoyed mindfully as part of your daily restorative ritual."
+    },
+    {
+      "type": "textarea",
+      "id": "ingredients_text",
+      "label": "Botanical ingredients text",
+      "default": "100% pure single-origin botanical harvest. Ethically cultivated, gently processed without high-temperature degradation, and completely free of fillers, binders, maltodextrin, and synthetic preservatives."
+    },
+    {
+      "type": "textarea",
+      "id": "storage_text",
+      "label": "Shipping, storage & care text",
+      "default": "Store in a cool, dry place away from direct sunlight and ambient humidity. Keep sealed tightly in its amber apothecary container or pouch to protect fragile botanical phytonutrients."
+    }
+  ],
   "disabled_on": {
     "groups": ["header", "footer"]
   }

@@ -1,0 +1,371 @@
+<section class="product-showcase full-width" id="product-showcase">
+  <div class="product-showcase__container">
+    <div class="product-showcase__header">
+      {% if section.settings.eyebrow != blank %}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="product-showcase__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <p class="product-showcase__subtext">{{ section.settings.text }}</p>
+      {% endif %}
+    </div>
+
+    <div class="product-showcase__grid">
+      {% for block in section.blocks %}
+        {% assign real_product = block.settings.product %}
+        {% assign card_title = real_product.title | default: block.settings.title %}
+        {% assign card_url = real_product.url | default: '#contact' %}
+
+        <div class="product-showcase__item" {{ block.shopify_attributes }}>
+          <div class="product-showcase__card editorial-card">
+            <a href="{{ card_url }}" class="product-showcase__media-link" aria-label="{{ card_title }}">
+              <div class="product-showcase__media">
+                {% if real_product != blank and real_product.featured_image != blank %}
+                  {{ real_product.featured_image | image_url: width: 900 | image_tag: class: 'editorial-card__img', loading: 'lazy', alt: card_title }}
+                {% elsif block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 900 | image_tag: class: 'editorial-card__img', loading: 'lazy', alt: card_title }}
+                {% elsif block.settings.default_temp_image != blank %}
+                  <img
+                    src="{{ block.settings.default_temp_image | asset_url }}"
+                    alt="{{ card_title }}"
+                    class="editorial-card__img"
+                    width="800"
+                    height="1000"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <img
+                    src="{{ 'temp-product-spirulina.webp' | asset_url }}"
+                    alt="{{ card_title }}"
+                    class="editorial-card__img"
+                    width="800"
+                    height="1000"
+                    loading="lazy"
+                  >
+                {% endif %}
+
+                {% if block.settings.category != blank %}
+                  <span class="product-showcase__badge">{{ block.settings.category }}</span>
+                {% endif %}
+              </div>
+            </a>
+
+            <div class="product-showcase__info">
+              <h3 class="product-showcase__title">
+                <a href="{{ card_url }}">{{ card_title }}</a>
+              </h3>
+
+              {% if block.settings.description != blank %}
+                <p class="product-showcase__desc">&ldquo;{{ block.settings.description }}&rdquo;</p>
+              {% endif %}
+
+              <div class="product-showcase__footer">
+                {% if real_product != blank and real_product.price > 0 %}
+                  <span class="product-showcase__price">{{ real_product.price | money }}</span>
+                {% endif %}
+
+                <a href="{{ card_url }}" class="product-showcase__link">
+                  <span>{{ block.settings.cta_text | default: 'View Formulation' }}</span>
+                  <span class="product-showcase__arrow" aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .product-showcase {
+    padding: 6.5rem 0;
+    background-color: var(--color-surface, #F1EADF);
+    border-top: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .product-showcase__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  .product-showcase__header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 4rem;
+  }
+
+  .product-showcase__heading {
+    margin-bottom: 0.85rem;
+  }
+
+  .product-showcase__subtext {
+    font-size: 1.15rem;
+    color: var(--color-foreground, #292D29);
+    opacity: 0.88;
+    line-height: 1.65;
+  }
+
+  .product-showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+
+  .product-showcase__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--color-background, #F8F5EF);
+    border: 1px solid var(--color-border, #E4DDD1);
+    box-shadow: 0 10px 30px rgba(31, 48, 37, 0.05);
+    transition: transform 0.4s var(--ease-luxury), box-shadow 0.4s var(--ease-luxury);
+  }
+
+  .product-showcase__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(31, 48, 37, 0.1);
+  }
+
+  .product-showcase__media-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .product-showcase__media {
+    position: relative;
+    aspect-ratio: 4 / 4.8;
+    overflow: hidden;
+    background-color: #EDE7DC;
+  }
+
+  .product-showcase__badge {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    background-color: rgba(31, 48, 37, 0.9);
+    color: var(--color-accent, #C7A77A);
+    border: 1px solid rgba(199, 167, 122, 0.35);
+    backdrop-filter: blur(6px);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.85rem;
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .product-showcase__info {
+    padding: 2.25rem 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.65rem;
+  }
+
+  .product-showcase__title {
+    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .product-showcase__title a {
+    text-decoration: none;
+    color: var(--color-primary, #1F3025);
+    transition: color 0.2s ease;
+  }
+
+  .product-showcase__title a:hover {
+    color: var(--color-accent, #C7A77A);
+  }
+
+  .product-showcase__desc {
+    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-style: italic;
+    font-size: 1.08rem;
+    line-height: 1.5;
+    color: var(--color-foreground, #292D29);
+    opacity: 0.82;
+    margin: 0;
+  }
+
+  .product-showcase__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .product-showcase__price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary, #1F3025);
+  }
+
+  .product-showcase__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-primary, #1F3025);
+    transition: color 0.2s ease, gap 0.3s ease;
+  }
+
+  .product-showcase__link:hover {
+    color: var(--color-accent, #C7A77A);
+    gap: 0.75rem;
+  }
+
+  .product-showcase__arrow {
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+
+  .product-showcase__link:hover .product-showcase__arrow {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 1024px) {
+    .product-showcase__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .product-showcase {
+      padding: 4.5rem 0;
+    }
+    .product-showcase__grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "SIGNATURE HARVESTS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Our Botanical Essentials"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Subtext",
+      "default": "Thoughtfully selected botanical ingredients for a more intentional wellness ritual."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "confirmed_product",
+      "name": "Confirmed Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Shopify product link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product name",
+          "default": "Spirulina Powder"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category badge",
+          "default": "Botanical Powder"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Short editorial description",
+          "default": "Pure botanical simplicity, thoughtfully presented."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom product image"
+        },
+        {
+          "type": "select",
+          "id": "default_temp_image",
+          "label": "Default temporary photography",
+          "options": [
+            { "value": "temp-product-spirulina.webp", "label": "Spirulina Powder (Deep Green)" },
+            { "value": "temp-product-moringa.webp", "label": "Moringa Powder (Vibrant Green)" },
+            { "value": "temp-product-sea-buckthorn.webp", "label": "Sea Buckthorn Powder (Golden Orange)" }
+          ],
+          "default": "temp-product-spirulina.webp"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA link label",
+          "default": "View Formulation"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product showcase",
+      "blocks": [
+        {
+          "type": "confirmed_product",
+          "settings": {
+            "title": "Spirulina Powder",
+            "category": "Botanical Powder",
+            "description": "Pure botanical simplicity, thoughtfully presented.",
+            "default_temp_image": "temp-product-spirulina.webp"
+          }
+        },
+        {
+          "type": "confirmed_product",
+          "settings": {
+            "title": "Moringa Powder",
+            "category": "Botanical Powder",
+            "description": "An everyday botanical ingredient inspired by nature.",
+            "default_temp_image": "temp-product-moringa.webp"
+          }
+        },
+        {
+          "type": "confirmed_product",
+          "settings": {
+            "title": "Sea Buckthorn Powder",
+            "category": "Botanical Powder",
+            "description": "A vibrant botanical ingredient with a naturally distinctive character.",
+            "default_temp_image": "temp-product-sea-buckthorn.webp"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,343 @@
+<section class="contact-section contact-section--{{ section.settings.background_style }} full-width" id="contact">
+  <div class="contact-section__container">
+    <div class="contact-section__inner">
+      {% if section.settings.eyebrow != blank %}
+        <span class="eyebrow contact-section__eyebrow">{{ section.settings.eyebrow }}</span>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="contact-section__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <p class="contact-section__subtext">{{ section.settings.subtext }}</p>
+      {% endif %}
+
+      <div class="contact-card">
+        <div class="contact-card__icon-wrapper" aria-hidden="true">
+          <svg class="contact-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 0 1 10 10c0 5.25-3.5 8.5-8.5 9.5-1.5.3-3.5.5-4.5.5C4 22 2 19 2 12A10 10 0 0 1 12 2z"/>
+            <path d="M7 12c1.5-2 3.5-3 5-3s3.5 1 5 3"/>
+            <path d="M12 9v9"/>
+          </svg>
+        </div>
+
+        <div class="contact-card__body">
+          {% if section.settings.contact_name != blank %}
+            <div class="contact-card__row">
+              <span class="contact-card__label">Brand Representative</span>
+              <p class="contact-card__name">{{ section.settings.contact_name }}</p>
+            </div>
+          {% endif %}
+
+          {% if section.settings.contact_email != blank %}
+            <div class="contact-card__row">
+              <span class="contact-card__label">Direct Correspondence</span>
+              <a href="mailto:{{ section.settings.contact_email }}" class="contact-card__email-link">
+                <svg class="contact-card__email-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <span>{{ section.settings.contact_email }}</span>
+              </a>
+            </div>
+          {% endif %}
+
+          {% if section.settings.note != blank %}
+            <p class="contact-card__note">{{ section.settings.note }}</p>
+          {% endif %}
+        </div>
+
+        {% if section.settings.contact_email != blank %}
+          <div class="contact-card__action">
+            <a href="mailto:{{ section.settings.contact_email }}?subject=Aryvan%20Botanical%20Wellness%20Enquiry" class="btn btn--primary contact-card__btn">
+              {{ section.settings.button_label | default: "Send An Enquiry" }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .contact-section {
+    padding: 6.5rem 0;
+    position: relative;
+    border-top: 1px solid var(--color-border, #E4DDD1);
+  }
+
+  .contact-section--ivory {
+    background-color: var(--color-bg, #F8F5EF);
+  }
+
+  .contact-section--cream {
+    background-color: var(--color-surface, #F1EADF);
+  }
+
+  .contact-section--forest {
+    background-color: var(--color-primary, #1F3025);
+    color: var(--color-bg, #F8F5EF);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .contact-section__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  .contact-section__inner {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-section__eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-section--forest .contact-section__eyebrow {
+    color: var(--color-accent, #C7A77A);
+  }
+
+  .contact-section__heading {
+    font-family: var(--font-heading-family);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.25rem;
+    color: var(--color-primary, #1F3025);
+  }
+
+  .contact-section--forest .contact-section__heading {
+    color: var(--color-bg, #F8F5EF);
+  }
+
+  .contact-section__subtext {
+    font-family: var(--font-body-family);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text-muted, #5A6258);
+    margin: 0 auto 3rem;
+  }
+
+  .contact-section--forest .contact-section__subtext {
+    color: #C2CAC0;
+  }
+
+  .contact-card {
+    background-color: var(--color-bg, #F8F5EF);
+    border: 1px solid var(--color-border, #E4DDD1);
+    border-radius: 4px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 30px rgba(31, 48, 37, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .contact-section--ivory .contact-card {
+    background-color: var(--color-surface, #F1EADF);
+    border-color: #DDD4C6;
+  }
+
+  .contact-section--forest .contact-card {
+    background-color: var(--color-primary-dark, #16241B);
+    border-color: rgba(199, 167, 122, 0.25);
+  }
+
+  .contact-card__icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(199, 167, 122, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent, #C7A77A);
+  }
+
+  .contact-card__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .contact-card__body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .contact-card__row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .contact-card__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, #7A8478);
+  }
+
+  .contact-section--forest .contact-card__label {
+    color: #9EABA0;
+  }
+
+  .contact-card__name {
+    font-family: var(--font-heading-family);
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--color-primary, #1F3025);
+    margin: 0;
+  }
+
+  .contact-section--forest .contact-card__name {
+    color: #F8F5EF;
+  }
+
+  .contact-card__email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-body-family);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-primary, #1F3025);
+    text-decoration: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 3px;
+    transition: color 0.25s ease, background-color 0.25s ease;
+  }
+
+  .contact-card__email-link:hover {
+    color: var(--color-accent, #C7A77A);
+    background-color: rgba(199, 167, 122, 0.08);
+  }
+
+  .contact-section--forest .contact-card__email-link {
+    color: #F8F5EF;
+  }
+
+  .contact-section--forest .contact-card__email-link:hover {
+    color: var(--color-accent, #C7A77A);
+  }
+
+  .contact-card__email-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-accent, #C7A77A);
+  }
+
+  .contact-card__note {
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #7A8478);
+    margin: 0.5rem 0 0;
+    font-style: italic;
+  }
+
+  .contact-section--forest .contact-card__note {
+    color: #9EABA0;
+  }
+
+  .contact-card__action {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
+  .contact-card__btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 680px) {
+    .contact-section {
+      padding: 4.5rem 0;
+    }
+
+    .contact-card {
+      padding: 2.25rem 1.5rem;
+    }
+
+    .contact-card__email-link {
+      font-size: 0.95rem;
+      word-break: break-all;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Background style",
+      "options": [
+        { "value": "ivory", "label": "Warm Ivory" },
+        { "value": "cream", "label": "Soft Cream" },
+        { "value": "forest", "label": "Dark Botanical Forest" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "GET IN TOUCH"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Let's Connect"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "For product enquiries, collaborations or questions about Aryvan Botanical Wellness, we'd love to hear from you."
+    },
+    {
+      "type": "text",
+      "id": "contact_name",
+      "label": "Contact name",
+      "default": "Arpit Tripathi"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact email",
+      "default": "atripathi7874@gmail.com"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Direct response note",
+      "default": "We typically respond within one business day."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Send An Enquiry"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact section"
+    }
+  ]
+}
+{% endschema %}
