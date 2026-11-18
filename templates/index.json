@@ -1,14 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-banner",
       "settings": {
+        "enable_floating_leaves": true,
         "eyebrow": "ARYVAN BOTANICAL WELLNESS",
         "heading": "Nature, Thoughtfully Refined.",
         "text": "Discover the harmony of botanical wisdom and modern wellness.",
         "primary_button_label": "EXPLORE THE COLLECTION",
+        "primary_button_link": "",
         "secondary_button_label": "OUR PHILOSOPHY",
-        "enable_floating_leaves": true,
+        "secondary_button_link": "",
         "alignment": "center",
         "min_height": 680,
         "overlay_opacity": 75
@@ -29,6 +40,7 @@
         "spirulina": {
           "type": "confirmed_product",
           "settings": {
+            "product": "spirulina-powder",
             "title": "Spirulina Powder",
             "category": "Botanical Powder",
             "description": "Pure botanical simplicity, thoughtfully presented.",
@@ -39,6 +51,7 @@
         "moringa": {
           "type": "confirmed_product",
           "settings": {
+            "product": "moringa-powder",
             "title": "Moringa Powder",
             "category": "Botanical Powder",
             "description": "An everyday botanical ingredient inspired by nature.",
@@ -49,6 +62,7 @@
         "sea_buckthorn": {
           "type": "confirmed_product",
           "settings": {
+            "product": "sea-buckthorn-powder",
             "title": "Sea Buckthorn Powder",
             "category": "Botanical Powder",
             "description": "A vibrant botanical ingredient with a naturally distinctive character.",
@@ -179,7 +193,8 @@
         "text_paragraph_2": "Each formulation is slow-macerated in small artisanal vessels, ensuring delicate volatile essences, terpenes, and plant sterols remain unadulterated and biologically resonant.",
         "quote": "True wellness is not created in haste. It is distilled through patience, reverence, and nature's quiet wisdom.",
         "quote_author": "Aryvan Botanical Ethos",
-        "button_label": "Explore Our Philosophy"
+        "button_label": "Explore Our Philosophy",
+        "button_link": ""
       }
     },
     "brand_values": {
