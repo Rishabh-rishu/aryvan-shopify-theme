@@ -91,6 +91,7 @@
             "badge_label": "COMING SOON",
             "title": "Botanical Formulation IV",
             "description": "Selected whole-plant adaptogen in small-batch formulation.",
+            "image": "shopify://shop_images/Ashwagandha_Botanical_Wellness_Pouch.png",
             "default_temp_image": "temp-coming-soon-1.webp"
           }
         },
@@ -100,6 +101,7 @@
             "badge_label": "COMING SOON",
             "title": "Botanical Formulation V",
             "description": "Artisanal infusion crafted to restore holistic daily vitality.",
+            "image": "shopify://shop_images/Premium_Butterfly_Pea_Botanical_Pouch.png",
             "default_temp_image": "temp-coming-soon-2.webp"
           }
         },
@@ -109,6 +111,7 @@
             "badge_label": "COMING SOON",
             "title": "Botanical Formulation VI",
             "description": "Cold-pressed herbal elixir preserved in dark amber glass.",
+            "image": "shopify://shop_images/Aryvan_Arjuna_Bark_Powder_Pouch.png",
             "default_temp_image": "temp-coming-soon-3.webp"
           }
         },
@@ -118,6 +121,7 @@
             "badge_label": "COMING SOON",
             "title": "Botanical Formulation VII",
             "description": "Time-honored botanical powder for mindful self-care rituals.",
+            "image": "shopify://shop_images/ARYVAN_Wheatgrass_Powder_Pouch.png",
             "default_temp_image": "temp-coming-soon-4.webp"
           }
         }
