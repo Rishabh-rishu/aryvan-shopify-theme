@@ -70,8 +70,8 @@
 {% stylesheet %}
   .best-sellers {
     padding: 6.5rem 0;
-    background-color: var(--color-surface, #F1EADF);
-    border-top: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-secondary, #122019);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .best-sellers__container {
@@ -88,12 +88,13 @@
 
   .best-sellers__heading {
     margin-bottom: 0.85rem;
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .best-sellers__subtext {
     font-size: 1.1rem;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.85;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.9;
   }
 
   .best-sellers__grid {
@@ -115,16 +116,19 @@
     grid-template-columns: 1fr 1.15fr;
     gap: 4rem;
     align-items: center;
-    background-color: var(--color-background, #F8F5EF);
-    border: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     border-radius: var(--style-border-radius-cards, 4px);
     padding: 3rem;
-    box-shadow: 0 10px 30px rgba(31, 48, 37, 0.04);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   }
 
   .best-sellers__showcase-media {
     aspect-ratio: 4 / 4.8;
     overflow: hidden;
+    background-color: var(--color-bg-primary, #0B1510);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.15));
+    border-radius: 4px;
   }
 
   .best-sellers__showcase-content {
@@ -134,18 +138,18 @@
   }
 
   .best-sellers__showcase-title {
-    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-family: var(--font-heading-family, 'Cormorant Garamond', Georgia, serif);
     font-size: clamp(1.85rem, 2.5vw, 2.5rem);
     line-height: 1.2;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin: 0;
   }
 
   .best-sellers__showcase-text {
     font-size: 1.05rem;
     line-height: 1.7;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.88;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.92;
     margin: 0;
   }
 

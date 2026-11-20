@@ -64,8 +64,8 @@
 {% stylesheet %}
   .botanical-ingredients {
     padding: 7rem 0;
-    background-color: var(--color-background, #F8F5EF);
-    border-top: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-primary, #0B1510);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .botanical-ingredients__container {
@@ -87,16 +87,17 @@
     border-radius: var(--style-border-radius-cards, 4px);
     overflow: hidden;
     position: relative;
-    box-shadow: 0 12px 32px rgba(31, 48, 37, 0.08);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
   }
 
   .botanical-ingredients__hero-badge {
     position: absolute;
     bottom: 1.5rem;
     left: 1.5rem;
-    background-color: rgba(31, 48, 37, 0.88);
+    background-color: rgba(8, 15, 11, 0.92);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(199, 167, 122, 0.35);
+    border: 1px solid rgba(201, 164, 106, 0.35);
     padding: 0.5rem 1rem;
     border-radius: 2px;
     z-index: 2;
@@ -106,7 +107,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent, #C9A46A);
     font-weight: 600;
   }
 
@@ -118,12 +119,13 @@
 
   .botanical-ingredients__heading {
     margin: 0;
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .botanical-ingredients__subtext {
     font-size: 1.1rem;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.88;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.95;
     line-height: 1.7;
     margin: 0;
   }
@@ -140,24 +142,27 @@
     flex-direction: column;
     align-items: flex-start;
     height: 100%;
-    background-color: var(--color-surface, #F1EADF);
-    border: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     border-radius: var(--style-border-radius-cards, 4px);
     position: relative;
-    transition: transform 0.35s var(--ease-luxury), box-shadow 0.35s var(--ease-luxury);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.35s var(--ease-luxury), box-shadow 0.35s var(--ease-luxury), border-color 0.35s ease;
   }
 
   .botanical-ingredients__card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(31, 48, 37, 0.08);
+    border-color: rgba(201, 164, 106, 0.45);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
   }
 
   .botanical-ingredients__icon-wrap {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: rgba(31, 48, 37, 0.06);
-    color: var(--color-primary, #1F3025);
+    background-color: rgba(201, 164, 106, 0.12);
+    border: 1px solid rgba(201, 164, 106, 0.25);
+    color: var(--color-accent, #C9A46A);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -175,22 +180,22 @@
     right: 2rem;
     font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
     font-size: 1.25rem;
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent, #C9A46A);
     opacity: 0.85;
   }
 
   .botanical-ingredients__title {
     font-size: 1.35rem;
     font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin-bottom: 0.75rem;
     line-height: 1.25;
   }
 
   .botanical-ingredients__description {
     font-size: 0.95rem;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.85;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.9;
     line-height: 1.65;
     margin: 0;
   }

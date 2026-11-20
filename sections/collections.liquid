@@ -5,51 +5,132 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
-<h1>{{ 'collections.title' | t }}</h1>
+<section class="collections-section full-width">
+  <div class="collections-section__container">
+    <div class="collections-section__header">
+      <span class="eyebrow">BOTANICAL ARCHIVE</span>
+      <h1 class="collections-section__title">{{ 'collections.title' | t | default: 'All Collections' }}</h1>
+    </div>
 
-<div
-  class="collections {{ section.settings.grid_item_width }}"
-  style="--grid-gap: {{ section.settings.grid_gap }}px"
->
-  {% for collection in collections %}
-    <a class="collection-card" href="{{ collection.url }}">
-      {% if collection.featured_image %}
-        {% render 'image',
-          class: 'collection-card__image',
-          image: collection.featured_image,
-          width: 600,
-          height: 600,
-          crop: 'center'
-        %}
-      {% endif %}
+    <div
+      class="collections {{ section.settings.grid_item_width }}"
+      style="--grid-gap: {{ section.settings.grid_gap }}px"
+    >
+      {% for collection in collections %}
+        <a class="collection-card" href="{{ collection.url }}">
+          <div class="collection-card__media">
+            {% if collection.featured_image %}
+              {% render 'image',
+                class: 'collection-card__image',
+                image: collection.featured_image,
+                width: 600,
+                height: 600,
+                crop: 'center'
+              %}
+            {% else %}
+              <div class="collection-card__placeholder">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a10 10 0 0 1 10 10c0 5.25-3.5 8.5-8.5 9.5-1.5.3-3.5.5-4.5.5C4 22 2 19 2 12A10 10 0 0 1 12 2z"/>
+                  <path d="M7 12c1.5-2 3.5-3 5-3s3.5 1 5 3"/>
+                  <path d="M12 9v9"/>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
 
-      <div class="collection-card__content">
-        <p>{{ collection.title }}</p>
+          <div class="collection-card__content">
+            <h3 class="collection-card__title">{{ collection.title }}</h3>
 
-        {% if collection.description %}
-          <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
-        {% endif %}
-      </div>
-    </a>
-  {% endfor %}
-</div>
+            {% if collection.description %}
+              <p class="collection-card__desc">{{ collection.description | strip_html | truncatewords: 15 }}</p>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
 {% stylesheet %}
+  .collections-section {
+    padding: 4rem 0 7rem;
+    background-color: var(--color-bg-primary, #0B1510);
+    min-height: 60vh;
+  }
+  .collections-section__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+  .collections-section__header {
+    margin-bottom: 3.5rem;
+    text-align: center;
+  }
+  .collections-section__title {
+    font-family: var(--font-heading-family);
+    color: var(--color-text-primary, #F3EBDD);
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
+    font-weight: 400;
+    margin: 0.5rem 0 0;
+  }
   .collections {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
     gap: var(--grid-gap);
   }
   .collections--compact {
-    --collection-card-size: 160px;
+    --collection-card-size: 220px;
   }
   .collections--full {
-    --collection-card-size: 280px;
+    --collection-card-size: 320px;
   }
   .collection-card {
     display: flex;
     flex-direction: column;
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    border-radius: 4px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .collection-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent, #C9A46A);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  }
+  .collection-card__media {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: var(--color-bg-primary, #0B1510);
+  }
+  .collection-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 100%;
+    color: var(--color-accent, #C9A46A);
+    opacity: 0.7;
+  }
+  .collection-card__content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .collection-card__title {
+    font-family: var(--font-heading-family);
+    font-size: 1.35rem;
+    color: var(--color-text-primary, #F3EBDD);
+    margin: 0;
+    font-weight: 500;
+  }
+  .collection-card__desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary, #B8B5A9);
+    margin: 0;
+    line-height: 1.5;
   }
 {% endstylesheet %}
 

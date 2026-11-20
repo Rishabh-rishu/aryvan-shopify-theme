@@ -152,6 +152,10 @@
                     </div>
                   {% endfor %}
                 </div>
+
+                <script type="application/json" id="ProductJson-{{ section.id }}">
+                  {{ product.variants | json }}
+                </script>
               {% endif %}
 
               <input type="hidden" name="id" value="{{ current_variant.id }}" id="ProductSelect-{{ section.id }}">
@@ -317,13 +321,68 @@
         });
       }
     });
+
+    // Variant selector handling
+    const variantSelects = document.querySelectorAll('.product-form__select');
+    const sectionContainer = document.querySelector('[data-section-id]');
+    const sectionId = sectionContainer ? sectionContainer.getAttribute('data-section-id') : null;
+    const productJsonEl = sectionId ? document.getElementById('ProductJson-' + sectionId) : null;
+
+    if (variantSelects.length && productJsonEl) {
+      try {
+        const variants = JSON.parse(productJsonEl.textContent);
+        const form = document.getElementById('product-form-pdp');
+        const hiddenIdInput = form ? form.querySelector('input[name="id"]') : null;
+        const submitBtn = form ? form.querySelector('.product-form__submit-btn') : null;
+        const currentPriceEl = document.querySelector('.product-details__current-price');
+
+        function updateVariant() {
+          const selectedOptions = Array.from(variantSelects).map(select => {
+            const labelVal = select.closest('.product-form__option') ? select.closest('.product-form__option').querySelector('.product-form__selected-value') : null;
+            if (labelVal) labelVal.textContent = select.value;
+            return select.value;
+          });
+
+          const matchedVariant = variants.find(v => {
+            return selectedOptions.every((opt, index) => v.options[index] === opt);
+          });
+
+          if (matchedVariant) {
+            if (hiddenIdInput) hiddenIdInput.value = matchedVariant.id;
+            if (currentPriceEl && matchedVariant.price) {
+              const formatted = (matchedVariant.price / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+              currentPriceEl.textContent = formatted;
+            }
+            if (submitBtn) {
+              if (matchedVariant.available) {
+                submitBtn.removeAttribute('disabled');
+                const span = submitBtn.querySelector('span');
+                if (span) span.textContent = 'Add to Cart';
+              } else {
+                submitBtn.setAttribute('disabled', 'disabled');
+                const span = submitBtn.querySelector('span');
+                if (span) span.textContent = 'Currently Reserved';
+              }
+            }
+            if (matchedVariant.featured_image && mainImg) {
+              mainImg.setAttribute('src', matchedVariant.featured_image.src);
+            }
+          }
+        }
+
+        variantSelects.forEach(s => s.addEventListener('change', updateVariant));
+      } catch (err) {
+        console.error('Error parsing product variants:', err);
+      }
+    }
   });
 {% endjavascript %}
 
 {% stylesheet %}
   .product-pdp {
     padding: 3rem 0 7rem;
-    background-color: var(--color-bg, #F8F5EF);
+    background-color: var(--color-bg-primary, #0B1510);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .product-pdp__container {
@@ -340,27 +399,28 @@
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-text-muted, #7A8478);
+    color: var(--color-text-secondary, #B8B5A9);
     margin-bottom: 2.5rem;
     flex-wrap: wrap;
   }
 
   .product-pdp__breadcrumbs a {
-    color: var(--color-text-muted, #7A8478);
+    color: var(--color-text-secondary, #B8B5A9);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
   .product-pdp__breadcrumbs a:hover {
-    color: var(--color-primary, #1F3025);
+    color: var(--color-accent, #C9A46A);
   }
 
   .product-pdp__breadcrumb-sep {
-    opacity: 0.4;
+    opacity: 0.5;
+    color: var(--color-accent, #C9A46A);
   }
 
   .product-pdp__breadcrumb-current {
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     font-weight: 500;
   }
 
@@ -379,8 +439,8 @@
   }
 
   .product-gallery__main-image-wrap {
-    background-color: var(--color-surface, #F1EADF);
-    border: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     border-radius: 4px;
     overflow: hidden;
     position: relative;
@@ -410,8 +470,8 @@
   }
 
   .product-gallery__thumbnail-btn {
-    border: 1px solid var(--color-border, #E4DDD1);
-    background: transparent;
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    background: var(--color-bg-card, #18271F);
     padding: 0;
     cursor: pointer;
     border-radius: 3px;
@@ -420,13 +480,14 @@
     height: 80px;
     flex-shrink: 0;
     opacity: 0.7;
-    transition: opacity 0.2s ease, border-color 0.2s ease;
+    transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
 
   .product-gallery__thumbnail-btn:hover,
   .product-gallery__thumbnail-btn.is-active {
     opacity: 1;
-    border-color: var(--color-primary, #1F3025);
+    border-color: var(--color-accent, #C9A46A);
+    transform: translateY(-2px);
   }
 
   .product-gallery__thumbnail-btn img {
@@ -444,6 +505,7 @@
 
   .product-details__eyebrow {
     margin-bottom: 0.6rem;
+    color: var(--color-accent, #C9A46A);
   }
 
   .product-details__title {
@@ -452,13 +514,13 @@
     font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.01em;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin: 0 0 1rem;
   }
 
   .product-details__price-row {
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border, #E4DDD1);
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .product-details__price {
@@ -470,12 +532,12 @@
   .product-details__current-price {
     font-size: 1.6rem;
     font-weight: 600;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-accent, #C9A46A);
   }
 
   .product-details__compare-price {
     font-size: 1.1rem;
-    color: var(--color-text-muted, #7A8478);
+    color: var(--color-text-secondary, #B8B5A9);
   }
 
   .product-details__price-inquire {
@@ -490,8 +552,9 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    background-color: rgba(199, 167, 122, 0.15);
-    color: #8C6A36;
+    background-color: rgba(201, 164, 106, 0.15);
+    color: var(--color-accent, #C9A46A);
+    border: 1px solid rgba(201, 164, 106, 0.3);
     padding: 0.35rem 0.8rem;
     border-radius: 2px;
   }
@@ -499,14 +562,14 @@
   .product-details__inquire-text {
     font-size: 0.95rem;
     font-style: italic;
-    color: var(--color-text-muted, #5A6258);
+    color: var(--color-text-secondary, #B8B5A9);
   }
 
   .product-details__summary {
     font-family: var(--font-body-family);
     font-size: 1.05rem;
     line-height: 1.7;
-    color: var(--color-text-muted, #4A5248);
+    color: var(--color-text-secondary, #B8B5A9);
   }
 
   /* Form & Purchase Controls */
@@ -528,22 +591,22 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin-bottom: 0.5rem;
   }
 
   .product-form__selected-value {
     font-weight: 400;
-    color: var(--color-text-muted, #7A8478);
+    color: var(--color-accent, #C9A46A);
   }
 
   .product-form__select {
     width: 100%;
     max-width: 380px;
     padding: 0.85rem 1rem;
-    border: 1px solid var(--color-border, #E4DDD1);
-    background-color: var(--color-surface, #F1EADF);
-    color: var(--color-primary, #1F3025);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.3));
+    background-color: var(--color-bg-card, #18271F);
+    color: var(--color-text-primary, #F3EBDD);
     font-family: var(--font-body-family);
     font-size: 0.95rem;
     border-radius: 3px;
@@ -553,7 +616,7 @@
   }
 
   .product-form__select:focus {
-    border-color: var(--color-primary, #1F3025);
+    border-color: var(--color-accent, #C9A46A);
   }
 
   .product-form__purchase-row {
@@ -566,9 +629,9 @@
   .quantity-selector {
     display: inline-flex;
     align-items: center;
-    border: 1px solid var(--color-border, #E4DDD1);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.3));
     border-radius: 3px;
-    background-color: var(--color-surface, #F1EADF);
+    background-color: var(--color-bg-card, #18271F);
     height: 52px;
   }
 
@@ -581,12 +644,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary, #1F3025);
-    transition: background-color 0.2s ease;
+    color: var(--color-text-primary, #F3EBDD);
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   .quantity-selector__btn:hover {
-    background-color: rgba(31, 48, 37, 0.05);
+    background-color: rgba(201, 164, 106, 0.15);
+    color: var(--color-accent, #C9A46A);
   }
 
   .quantity-selector__input {
@@ -596,7 +660,7 @@
     background: transparent;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     outline: none;
     -moz-appearance: textfield;
   }
@@ -621,6 +685,24 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
+    background-color: var(--color-accent, #C9A46A);
+    color: var(--color-bg-primary, #0B1510);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+  }
+
+  .product-form__submit-btn:hover:not(:disabled) {
+    background-color: var(--color-accent-hover, #D9B982);
+    transform: translateY(-2px);
+  }
+
+  .product-form__submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-bg-card, #18271F);
+    color: var(--color-text-secondary, #B8B5A9);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .product-form__payment-button {
@@ -633,8 +715,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     padding: 1.5rem 0;
-    border-top: 1px solid var(--color-border, #E4DDD1);
-    border-bottom: 1px solid var(--color-border, #E4DDD1);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .product-assurances__item {
@@ -647,13 +729,13 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .product-assurances__icon {
     width: 22px;
     height: 22px;
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent, #C9A46A);
   }
 
   /* Accordions */
@@ -663,7 +745,7 @@
   }
 
   .product-accordion {
-    border-bottom: 1px solid var(--color-border, #E4DDD1);
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .product-accordion__header {
@@ -684,7 +766,7 @@
     font-family: var(--font-heading-family);
     font-size: 1.25rem;
     font-weight: 500;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .product-accordion__icon {
@@ -698,7 +780,7 @@
   .product-accordion__icon::after {
     content: '';
     position: absolute;
-    background-color: var(--color-primary, #1F3025);
+    background-color: var(--color-accent, #C9A46A);
     transition: transform 0.3s ease;
   }
 
@@ -725,24 +807,24 @@
     padding-bottom: 1.5rem;
     font-size: 0.95rem;
     line-height: 1.7;
-    color: var(--color-text-muted, #5A6258);
+    color: var(--color-text-secondary, #B8B5A9);
   }
 
   /* Support Link */
   .product-details__support {
     font-size: 0.9rem;
-    color: var(--color-text-muted, #7A8478);
+    color: var(--color-text-secondary, #B8B5A9);
   }
 
   .product-details__support-link {
-    color: var(--color-primary, #1F3025);
+    color: var(--color-accent, #C9A46A);
     font-weight: 600;
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
   .product-details__support-link:hover {
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent-hover, #D9B982);
   }
 
   @media (max-width: 900px) {

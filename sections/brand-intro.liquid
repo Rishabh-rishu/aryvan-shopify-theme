@@ -36,7 +36,7 @@
 {% stylesheet %}
   .brand-intro {
     padding: 5.5rem 0 4.5rem;
-    background-color: var(--color-background, #F8F5EF);
+    background-color: var(--color-bg-primary, #0B1510);
     text-align: center;
     position: relative;
   }
@@ -53,14 +53,14 @@
   }
 
   .brand-intro__eyebrow {
-    color: var(--color-olive, #69775C);
+    color: var(--color-accent, #C9A46A);
     margin-bottom: 1rem;
   }
 
   .brand-intro__heading {
     font-size: clamp(2rem, 3.2vw, 3rem);
     line-height: 1.2;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin-bottom: 1.5rem;
     letter-spacing: -0.015em;
   }
@@ -68,8 +68,8 @@
   .brand-intro__text {
     font-size: 1.15rem;
     line-height: 1.75;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.9;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.95;
     margin-bottom: 2.25rem;
   }
 
@@ -79,7 +79,7 @@
     flex-wrap: wrap;
     gap: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border, #E4DDD1);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .brand-intro__badge {
@@ -90,14 +90,14 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .brand-intro__badge-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: var(--color-accent, #C7A77A);
+    background-color: var(--color-accent, #C9A46A);
   }
 
   @media (max-width: 768px) {

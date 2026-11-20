@@ -65,56 +65,56 @@
       {
         "type": "color",
         "id": "background_color",
-        "default": "#F8F5EF",
-        "label": "Warm Ivory Background"
+        "default": "#0B1510",
+        "label": "Primary Background"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#292D29",
-        "label": "Charcoal Body Text"
+        "default": "#F3EBDD",
+        "label": "Primary Text"
       },
       {
         "type": "color",
         "id": "color_primary",
-        "default": "#1F3025",
-        "label": "Deep Forest Green"
+        "default": "#F3EBDD",
+        "label": "Ivory Heading / Primary"
       },
       {
         "type": "color",
         "id": "color_secondary",
-        "default": "#263B2D",
-        "label": "Dark Botanical Green"
+        "default": "#122019",
+        "label": "Secondary Background"
       },
       {
         "type": "color",
         "id": "color_surface",
-        "default": "#F1EADF",
-        "label": "Soft Cream Surface"
+        "default": "#18271F",
+        "label": "Card Surface Background"
       },
       {
         "type": "color",
         "id": "color_sage",
-        "default": "#A4AE98",
-        "label": "Muted Sage"
+        "default": "#304838",
+        "label": "Muted Green"
       },
       {
         "type": "color",
         "id": "color_olive",
-        "default": "#69775C",
-        "label": "Olive Accent"
+        "default": "#C9A46A",
+        "label": "Champagne Gold Accent"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "default": "#C7A77A",
+        "default": "#C9A46A",
         "label": "Champagne Gold"
       },
       {
         "type": "color",
         "id": "color_border",
-        "default": "#E4DDD1",
-        "label": "Subtle Border"
+        "default": "#2E3D32",
+        "label": "Subtle Dark Border"
       },
       {
         "type": "range",

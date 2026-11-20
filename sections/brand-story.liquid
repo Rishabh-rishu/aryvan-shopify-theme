@@ -80,11 +80,11 @@
   }
 
   .brand-story--bg-cream {
-    background-color: var(--color-surface, #F1EADF);
+    background-color: var(--color-bg-secondary, #122019);
   }
 
   .brand-story--bg-ivory {
-    background-color: var(--color-background, #F8F5EF);
+    background-color: var(--color-bg-primary, #0B1510);
   }
 
   .brand-story__container {
@@ -113,19 +113,20 @@
     aspect-ratio: 4 / 5;
     border-radius: var(--style-border-radius-cards, 4px);
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(31, 48, 37, 0.08);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   }
 
   .brand-story__quote-card {
     position: absolute;
     bottom: -1.75rem;
     right: -1.75rem;
-    background-color: var(--color-background, #F8F5EF);
-    border: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     border-radius: var(--style-border-radius-cards, 4px);
     padding: 1.75rem 2rem;
     max-width: 340px;
-    box-shadow: 0 18px 36px rgba(31, 48, 37, 0.1);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5);
   }
 
   .brand-story__quote-text {
@@ -133,7 +134,7 @@
     font-style: italic;
     font-size: 1.18rem;
     line-height: 1.45;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin: 0 0 0.65rem;
   }
 
@@ -143,7 +144,7 @@
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-olive, #69775C);
+    color: var(--color-accent, #C9A46A);
     display: block;
   }
 
@@ -155,6 +156,7 @@
 
   .brand-story__heading {
     margin: 0;
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .brand-story__body {
@@ -163,8 +165,8 @@
     gap: 1.15rem;
     font-size: 1.1rem;
     line-height: 1.75;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.9;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.95;
   }
 
   .brand-story__pillars {
@@ -172,8 +174,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     padding: 1.75rem 0;
-    border-top: 1px solid var(--color-border, #E4DDD1);
-    border-bottom: 1px solid var(--color-border, #E4DDD1);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     margin: 0.75rem 0;
   }
 
@@ -186,7 +188,7 @@
   .brand-story__pillar-number {
     font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
     font-size: 1.45rem;
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent, #C9A46A);
     line-height: 1;
   }
 
@@ -195,7 +197,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .brand-story__action {

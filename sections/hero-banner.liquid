@@ -91,7 +91,7 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    background-color: #1F3025;
+    background-color: var(--color-bg-primary, #0B1510);
   }
 
   .hero-banner__media-wrapper {
@@ -123,9 +123,9 @@
     max-height: 800px;
     background: radial-gradient(
       circle,
-      rgba(248, 245, 239, 0.22) 0%,
-      rgba(199, 167, 122, 0.15) 40%,
-      rgba(31, 48, 37, 0) 70%
+      rgba(243, 235, 221, 0.12) 0%,
+      rgba(201, 164, 106, 0.1) 40%,
+      rgba(11, 21, 16, 0) 70%
     );
     filter: blur(50px);
     pointer-events: none;
@@ -139,9 +139,9 @@
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(25, 38, 29, 0.45) 0%,
-      rgba(31, 48, 37, 0.72) 65%,
-      rgba(20, 31, 24, 0.88) 100%
+      rgba(8, 15, 11, 0.55) 0%,
+      rgba(11, 21, 16, 0.78) 60%,
+      rgba(8, 15, 11, 0.95) 100%
     );
     opacity: var(--hero-overlay-opacity, 0.75);
     z-index: 3;
@@ -162,7 +162,7 @@
   .hero-leaf {
     position: absolute;
     opacity: 0.65;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
   }
 
   .hero-leaf svg {
@@ -235,26 +235,26 @@
   }
 
   .hero-banner__eyebrow {
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent, #C9A46A);
     letter-spacing: 0.24em;
     font-size: 0.78rem;
     margin-bottom: 1.25rem;
   }
 
   .hero-banner__heading {
-    color: #F8F5EF;
+    color: var(--color-text-primary, #F3EBDD);
     font-size: clamp(2.75rem, 5.5vw + 1rem, 5rem);
     line-height: 1.08;
     letter-spacing: -0.02em;
     margin-bottom: 1.5rem;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
   }
 
   .hero-banner__text {
     font-size: clamp(1.1rem, 1.4vw, 1.35rem);
     line-height: 1.65;
-    color: #F1EADF;
-    opacity: 0.94;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.95;
     margin-bottom: 2.75rem;
     max-width: 620px;
   }

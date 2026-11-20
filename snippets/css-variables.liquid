@@ -20,25 +20,42 @@
     --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
     --font-heading--style: {{ settings.type_heading_font.style }};
     --font-heading--weight: {{ settings.type_heading_font.weight }};
+    --font-heading-family: var(--font-heading--family);
 
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
+    --font-body-family: var(--font-primary--family);
 
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
 
-    /* Luxury Botanical Color System */
-    --color-background: {{ settings.background_color | default: '#F8F5EF' }};
-    --color-foreground: {{ settings.foreground_color | default: '#292D29' }};
-    --color-primary: {{ settings.color_primary | default: '#1F3025' }};
-    --color-secondary: {{ settings.color_secondary | default: '#263B2D' }};
-    --color-surface: {{ settings.color_surface | default: '#F1EADF' }};
-    --color-sage: {{ settings.color_sage | default: '#A4AE98' }};
-    --color-olive: {{ settings.color_olive | default: '#69775C' }};
-    --color-accent: {{ settings.color_accent | default: '#C7A77A' }};
-    --color-gold: {{ settings.color_accent | default: '#C7A77A' }};
-    --color-border: {{ settings.color_border | default: '#E4DDD1' }};
+    /* Luxury Botanical Dark Color System */
+    --color-bg-primary: #0B1510;
+    --color-bg-secondary: #122019;
+    --color-bg-card: #18271F;
+    --color-bg-header: #080F0B;
+    --color-text-primary: #F3EBDD;
+    --color-text-secondary: #B8B5A9;
+    --color-text-muted: #8E968B;
+    --color-accent: #C9A46A;
+    --color-accent-hover: #D9B982;
+    --color-gold: #C9A46A;
+    --color-gold-hover: #D9B982;
+    --color-border: rgba(201, 164, 106, 0.22);
+    --color-border-subtle: rgba(201, 164, 106, 0.12);
+    --color-muted-green: #304838;
+
+    /* Semantic Theme Aliases & Fallbacks */
+    --color-background: var(--color-bg-primary);
+    --color-bg: var(--color-bg-primary);
+    --color-foreground: var(--color-text-primary);
+    --color-primary: var(--color-text-primary);
+    --color-primary-dark: #080F0B;
+    --color-secondary: var(--color-bg-secondary);
+    --color-surface: var(--color-bg-card);
+    --color-sage: var(--color-muted-green);
+    --color-olive: var(--color-accent);
 
     --style-border-radius-inputs: {{ settings.input_corner_radius | default: 2 }}px;
     --style-border-radius-cards: 4px;

@@ -35,47 +35,49 @@
 {% stylesheet %}
   .brand-values {
     padding: 6.5rem 0;
+    background-color: var(--color-bg-primary, #0B1510);
     transition: background-color 0.3s ease;
   }
 
   .brand-values--theme-dark {
-    background-color: var(--color-primary, #1F3025);
-    color: #F8F5EF;
+    background-color: var(--color-bg-primary, #0B1510);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .brand-values--theme-dark .brand-values__eyebrow {
-    color: var(--color-accent, #C7A77A);
+    color: var(--color-accent, #C9A46A);
   }
 
   .brand-values--theme-dark .brand-values__heading {
-    color: #F8F5EF;
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .brand-values--theme-dark .brand-values__title {
-    color: #F8F5EF;
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .brand-values--theme-dark .brand-values__text {
-    color: #E4DDD1;
-    opacity: 0.88;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.95;
   }
 
   .brand-values--theme-dark .brand-values__icon {
-    background-color: rgba(199, 167, 122, 0.12);
-    border: 1px solid rgba(199, 167, 122, 0.3);
-    color: var(--color-accent, #C7A77A);
+    background-color: rgba(201, 164, 106, 0.12);
+    border: 1px solid rgba(201, 164, 106, 0.3);
+    color: var(--color-accent, #C9A46A);
   }
 
   .brand-values--theme-light {
-    background-color: var(--color-surface, #F1EADF);
-    color: var(--color-foreground, #292D29);
-    border-top: 1px solid var(--color-border, #E4DDD1);
-    border-bottom: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-secondary, #122019);
+    color: var(--color-text-primary, #F3EBDD);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .brand-values--theme-light .brand-values__icon {
-    background-color: rgba(31, 48, 37, 0.08);
-    color: var(--color-primary, #1F3025);
+    background-color: rgba(201, 164, 106, 0.12);
+    border: 1px solid rgba(201, 164, 106, 0.3);
+    color: var(--color-accent, #C9A46A);
   }
 
   .brand-values__container {

@@ -40,8 +40,8 @@
 {% stylesheet %}
   .testimonials {
     padding: 7rem 0;
-    background-color: var(--color-surface, #F1EADF);
-    border-top: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-primary, #0B1510);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .testimonials__container {
@@ -58,12 +58,13 @@
 
   .testimonials__heading {
     margin-bottom: 0.85rem;
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .testimonials__subtext {
     font-size: 1.1rem;
-    color: var(--color-foreground, #292D29);
-    opacity: 0.85;
+    color: var(--color-text-secondary, #B8B5A9);
+    opacity: 0.9;
   }
 
   .testimonials__grid {
@@ -77,34 +78,34 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: var(--color-background, #F8F5EF);
-    border: 1px solid var(--color-border, #E4DDD1);
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     border-radius: var(--style-border-radius-cards, 4px);
     position: relative;
-    box-shadow: 0 8px 24px rgba(31, 48, 37, 0.04);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
 
   .testimonials__quote-symbol {
-    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-family: var(--font-heading-family, 'Cormorant Garamond', Georgia, serif);
     font-size: 4rem;
     line-height: 1;
-    color: var(--color-accent, #C7A77A);
-    opacity: 0.65;
+    color: var(--color-accent, #C9A46A);
+    opacity: 0.75;
     margin-bottom: -1.5rem;
   }
 
   .testimonials__quote {
-    font-family: var(--font-heading--family, 'Cormorant Garamond', Georgia, serif);
+    font-family: var(--font-heading-family, 'Cormorant Garamond', Georgia, serif);
     font-size: 1.3rem;
     line-height: 1.55;
     font-style: italic;
-    color: var(--color-primary, #1F3025);
+    color: var(--color-text-primary, #F3EBDD);
     margin: 0 0 2rem;
     flex-grow: 1;
   }
 
   .testimonials__author-info {
-    border-top: 1px solid var(--color-border, #E4DDD1);
+    border-top: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
     padding-top: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -115,12 +116,12 @@
     font-size: 0.95rem;
     font-weight: 600;
     font-style: normal;
-    color: var(--color-foreground, #292D29);
+    color: var(--color-text-primary, #F3EBDD);
   }
 
   .testimonials__author-subtitle {
     font-size: 0.75rem;
-    color: var(--color-olive, #69775C);
+    color: var(--color-accent, #C9A46A);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }

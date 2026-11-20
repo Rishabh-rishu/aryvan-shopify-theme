@@ -5,27 +5,194 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
 {% endcomment %}
 
-<h1>{{ blog.title }}</h1>
-
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
-      {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
+<section class="blog-section full-width">
+  <div class="blog-section__container">
+    <div class="blog-section__header">
+      <span class="eyebrow">THE BOTANICAL JOURNAL</span>
+      <h1 class="blog-section__title">{{ blog.title }}</h1>
     </div>
-  {% endfor %}
 
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
-{% endpaginate %}
+    {% paginate blog.articles by 9 %}
+      <div class="blog-grid">
+        {% for article in blog.articles %}
+          <article class="blog-card">
+            {% if article.image %}
+              <a href="{{ article.url }}" class="blog-card__media">
+                {{ article.image | image_url: width: 800 | image_tag: class: 'blog-card__img', loading: 'lazy' }}
+              </a>
+            {% endif %}
+            <div class="blog-card__content">
+              {% assign date = article.published_at | time_tag: format: 'date' %}
+              <div class="blog-card__meta">
+                {{ 'blog.article_metadata_html' | t: date: date, author: article.author }}
+              </div>
+              <h2 class="blog-card__title">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h2>
+              <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+              <a href="{{ article.url }}" class="blog-card__read-more">
+                Read Entry &rarr;
+              </a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="blog-pagination" aria-label="Pagination">
+          {{- paginate | default_pagination -}}
+        </nav>
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .blog-section {
+    padding: 4.5rem 0 7rem;
+    background-color: var(--color-bg-primary, #0B1510);
+    color: var(--color-text-primary, #F3EBDD);
+    min-height: 65vh;
+  }
+  .blog-section__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+  .blog-section__header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+  }
+  .blog-section__title {
+    font-family: var(--font-heading-family);
+    color: var(--color-text-primary, #F3EBDD);
+    font-size: clamp(2.2rem, 3.8vw, 3.25rem);
+    font-weight: 400;
+    margin: 0.5rem 0 0;
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+  .blog-card {
+    background-color: var(--color-bg-card, #18271F);
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .blog-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent, #C9A46A);
+  }
+  .blog-card__media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    display: block;
+    background-color: var(--color-bg-primary, #0B1510);
+  }
+  .blog-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .blog-card:hover .blog-card__img {
+    transform: scale(1.03);
+  }
+  .blog-card__content {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 0.75rem;
+  }
+  .blog-card__meta {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent, #C9A46A);
+  }
+  .blog-card__title {
+    font-family: var(--font-heading-family);
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin: 0;
+    font-weight: 500;
+  }
+  .blog-card__title a {
+    color: var(--color-text-primary, #F3EBDD);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .blog-card__title a:hover {
+    color: var(--color-accent, #C9A46A);
+  }
+  .blog-card__excerpt {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary, #B8B5A9);
+    margin: 0;
+    flex-grow: 1;
+  }
+  .blog-card__read-more {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent, #C9A46A);
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    transition: color 0.2s ease;
+  }
+  .blog-card__read-more:hover {
+    color: var(--color-accent-hover, #D9B982);
+  }
+  .blog-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  .blog-pagination a,
+  .blog-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    margin: 0 0.25rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--color-text-primary, #F3EBDD);
+    background-color: var(--color-bg-card, #18271F);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .blog-pagination a:hover {
+    border-color: var(--color-accent, #C9A46A);
+    color: var(--color-accent, #C9A46A);
+    background-color: var(--color-bg-secondary, #122019);
+  }
+  .blog-pagination .current {
+    background-color: var(--color-accent, #C9A46A);
+    color: var(--color-bg-primary, #0B1510);
+    border-color: var(--color-accent, #C9A46A);
+    font-weight: 600;
+  }
+  @media (max-width: 640px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
