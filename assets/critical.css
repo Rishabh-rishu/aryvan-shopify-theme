@@ -171,18 +171,18 @@ h4 {
 .button-primary,
 .btn--primary,
 .button-gold {
-  background-color: var(--color-accent, #C9A46A);
-  color: #0B1510;
-  border: 1px solid var(--color-accent, #C9A46A);
+  background-color: var(--color-btn-primary-bg, var(--color-accent));
+  color: var(--color-btn-primary-text, #FFFFFF);
+  border: 1px solid var(--color-btn-primary-bg, var(--color-accent));
   font-weight: 600;
 }
 
 .button-primary:hover,
 .btn--primary:hover,
 .button-gold:hover {
-  background-color: var(--color-accent-hover, #D9B982);
-  border-color: var(--color-accent-hover, #D9B982);
-  color: #080F0B;
+  background-color: var(--color-btn-primary-hover-bg, var(--color-accent-hover));
+  border-color: var(--color-btn-primary-hover-bg, var(--color-accent-hover));
+  color: var(--color-btn-primary-hover-text, #FFFFFF);
   transform: translateY(-2px);
 }
 
@@ -190,8 +190,8 @@ h4 {
 .btn--secondary,
 .button-outline-light {
   background-color: transparent;
-  color: var(--color-text-primary, #F3EBDD);
-  border: 1px solid var(--color-accent, #C9A46A);
+  color: var(--color-text-primary, #25352B);
+  border: 1px solid var(--color-accent, #A18455);
 }
 
 .button-secondary:hover,
@@ -201,6 +201,17 @@ h4 {
   border-color: var(--color-accent-hover, #D9B982);
   color: var(--color-accent-hover, #D9B982);
   transform: translateY(-2px);
+}
+
+/* Smooth Theme Switching Transitions */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.35s var(--ease-luxury, ease),
+              color 0.35s var(--ease-luxury, ease),
+              border-color 0.35s var(--ease-luxury, ease),
+              box-shadow 0.35s var(--ease-luxury, ease) !important;
 }
 
 /* Section layout utilities */

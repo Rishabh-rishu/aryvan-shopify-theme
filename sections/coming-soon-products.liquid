@@ -108,20 +108,20 @@
     height: 100%;
     background-color: var(--color-bg-card, #18271F);
     border: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 10px 30px var(--color-card-shadow, rgba(0, 0, 0, 0.35));
     transition: transform 0.4s var(--ease-luxury), box-shadow 0.4s var(--ease-luxury);
   }
 
   .coming-soon-products__card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--color-card-shadow-hover, 0 18px 40px rgba(0, 0, 0, 0.5));
   }
 
   .coming-soon-products__media {
     position: relative;
     aspect-ratio: 4 / 4.8;
     overflow: hidden;
-    background-color: #0B1510;
+    background-color: var(--color-bg-card, #18271F);
   }
 
   .coming-soon-products__gradient {
@@ -129,20 +129,29 @@
     inset: 0;
     background: linear-gradient(
       180deg,
+      rgba(0, 0, 0, 0.02) 0%,
+      rgba(0, 0, 0, 0.08) 60%,
+      rgba(0, 0, 0, 0.22) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  [data-theme="dark"] .coming-soon-products__gradient {
+    background: linear-gradient(
+      180deg,
       rgba(8, 15, 11, 0.05) 0%,
       rgba(8, 15, 11, 0.15) 60%,
       rgba(8, 15, 11, 0.4) 100%
     );
-    z-index: 2;
-    pointer-events: none;
   }
 
   .coming-soon-products__badge {
     position: absolute;
     top: 1.25rem;
     left: 1.25rem;
-    background-color: var(--color-accent, #C9A46A);
-    color: #0B1510;
+    background-color: var(--color-badge-bg, var(--color-accent, #C9A46A));
+    color: var(--color-badge-text, #0B1510);
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -150,7 +159,7 @@
     padding: 0.35rem 0.75rem;
     border-radius: 2px;
     z-index: 3;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   .coming-soon-products__info {

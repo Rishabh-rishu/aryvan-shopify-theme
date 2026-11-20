@@ -29,15 +29,77 @@
 
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
+    --style-border-radius-inputs: {{ settings.input_corner_radius | default: 2 }}px;
+    --style-border-radius-cards: 4px;
+    --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+  }
 
-    /* Luxury Botanical Dark Color System */
+  /* -------------------------------------------------------------
+     1. Premium Light Theme (Default)
+     ------------------------------------------------------------- */
+  :root,
+  :root[data-theme="light"],
+  html[data-theme="light"] {
+    --color-bg-primary: #FAF9F6;
+    --color-bg-secondary: #F1EFE8;
+    --color-bg-card: #FFFFFF;
+    --color-bg-header: #FFFFFF;
+    --color-bg-footer: #25352B;
+    --color-text-primary: #25352B;
+    --color-text-secondary: #6F766E;
+    --color-text-muted: #8E968B;
+    --color-text-footer: #FAF9F6;
+    --color-accent: #A18455;
+    --color-accent-hover: #8C7043;
+    --color-gold: #A18455;
+    --color-gold-hover: #8C7043;
+    --color-border: #E5E1D8;
+    --color-border-subtle: rgba(37, 53, 43, 0.08);
+    --color-muted-green: #3A5043;
+
+    --color-btn-primary-bg: #A18455;
+    --color-btn-primary-text: #FFFFFF;
+    --color-btn-primary-hover-bg: #8C7043;
+    --color-btn-primary-hover-text: #FFFFFF;
+
+    --color-badge-bg: #A18455;
+    --color-badge-text: #FFFFFF;
+    --color-card-shadow: rgba(37, 53, 43, 0.06);
+    --color-card-shadow-hover: rgba(37, 53, 43, 0.12);
+
+    --announcement-bg: #25352B;
+    --announcement-text: #FAF9F6;
+
+    /* Semantic Theme Aliases */
+    --color-background: var(--color-bg-primary);
+    --color-bg: var(--color-bg-primary);
+    --color-foreground: var(--color-text-primary);
+    --color-primary: var(--color-text-primary);
+    --color-primary-dark: #1F3025;
+    --color-secondary: var(--color-bg-secondary);
+    --color-surface: var(--color-bg-card);
+    --color-card: var(--color-bg-card);
+    --color-sage: #A4AE98;
+    --color-olive: #69775C;
+    --color-cream: #F1EFE8;
+    --color-ivory: #FAF9F6;
+    --color-charcoal: #25352B;
+  }
+
+  /* -------------------------------------------------------------
+     2. Premium Luxury Dark Theme
+     ------------------------------------------------------------- */
+  :root[data-theme="dark"],
+  html[data-theme="dark"] {
     --color-bg-primary: #0B1510;
     --color-bg-secondary: #122019;
     --color-bg-card: #18271F;
     --color-bg-header: #080F0B;
+    --color-bg-footer: #080F0B;
     --color-text-primary: #F3EBDD;
     --color-text-secondary: #B8B5A9;
     --color-text-muted: #8E968B;
+    --color-text-footer: #F3EBDD;
     --color-accent: #C9A46A;
     --color-accent-hover: #D9B982;
     --color-gold: #C9A46A;
@@ -46,7 +108,20 @@
     --color-border-subtle: rgba(201, 164, 106, 0.12);
     --color-muted-green: #304838;
 
-    /* Semantic Theme Aliases & Fallbacks */
+    --color-btn-primary-bg: #C9A46A;
+    --color-btn-primary-text: #0B1510;
+    --color-btn-primary-hover-bg: #D9B982;
+    --color-btn-primary-hover-text: #080F0B;
+
+    --color-badge-bg: #C9A46A;
+    --color-badge-text: #0B1510;
+    --color-card-shadow: rgba(0, 0, 0, 0.40);
+    --color-card-shadow-hover: rgba(0, 0, 0, 0.60);
+
+    --announcement-bg: #080F0B;
+    --announcement-text: #F3EBDD;
+
+    /* Semantic Theme Aliases */
     --color-background: var(--color-bg-primary);
     --color-bg: var(--color-bg-primary);
     --color-foreground: var(--color-text-primary);
@@ -54,11 +129,11 @@
     --color-primary-dark: #080F0B;
     --color-secondary: var(--color-bg-secondary);
     --color-surface: var(--color-bg-card);
-    --color-sage: var(--color-muted-green);
-    --color-olive: var(--color-accent);
-
-    --style-border-radius-inputs: {{ settings.input_corner_radius | default: 2 }}px;
-    --style-border-radius-cards: 4px;
-    --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+    --color-card: var(--color-bg-card);
+    --color-sage: #304838;
+    --color-olive: #C9A46A;
+    --color-cream: #122019;
+    --color-ivory: #0B1510;
+    --color-charcoal: #080F0B;
   }
 {% endstyle %}

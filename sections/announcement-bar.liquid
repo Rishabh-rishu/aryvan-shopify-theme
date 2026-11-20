@@ -1,9 +1,8 @@
 <aside
   class="announcement-bar"
-  style="
-    --announcement-bg: {{ section.settings.bg_color | default: '#080F0B' }};
-    --announcement-text: {{ section.settings.text_color | default: '#F3EBDD' }};
-  "
+  {% if section.settings.bg_color != blank and section.settings.bg_color != '#080F0B' and section.settings.bg_color != '#1F3025' %}
+    style="--announcement-bg: {{ section.settings.bg_color }}; --announcement-text: {{ section.settings.text_color }};"
+  {% endif %}
   aria-label="Announcement"
 >
   <div class="announcement-bar__inner">
@@ -19,8 +18,8 @@
 
 {% stylesheet %}
   .announcement-bar {
-    background-color: var(--announcement-bg, #080F0B);
-    color: var(--announcement-text, #F3EBDD);
+    background-color: var(--announcement-bg, var(--color-bg-header, #080F0B));
+    color: var(--announcement-text, var(--color-text-primary, #F3EBDD));
     font-size: 0.76rem;
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -29,7 +28,7 @@
     text-align: center;
     position: relative;
     z-index: 25;
-    border-bottom: 1px solid rgba(201, 164, 106, 0.22);
+    border-bottom: 1px solid var(--color-border, rgba(201, 164, 106, 0.22));
   }
 
   .announcement-bar__inner {

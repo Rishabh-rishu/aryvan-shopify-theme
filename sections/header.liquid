@@ -44,6 +44,22 @@
     </div>
 
     <div class="site-header__right">
+      <button
+        type="button"
+        class="site-header__icon-btn theme-toggle"
+        aria-label="Switch to Dark Mode"
+        title="Switch to Dark Mode"
+        data-theme-toggle
+      >
+        <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+          {{ 'icon-moon.svg' | inline_asset_content }}
+        </span>
+        <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+          {{ 'icon-sun.svg' | inline_asset_content }}
+        </span>
+        <span class="theme-toggle__tooltip" role="tooltip">Switch to Dark Mode</span>
+      </button>
+
       <details class="site-header__search-details">
         <summary class="site-header__icon-btn" aria-label="{{ 'search.title' | t | default: 'Search' }}">
           {{ 'icon-search.svg' | inline_asset_content }}
@@ -82,14 +98,30 @@
   <div id="MobileNav" class="site-header__mobile-drawer" aria-hidden="true">
     <div class="site-header__mobile-header">
       <span class="site-header__brand-title">{{ shop.name }}</span>
-      <button
-        type="button"
-        class="site-header__icon-btn"
-        aria-label="Close navigation menu"
-        onclick="document.getElementById('MobileNav').classList.remove('is-open');"
-      >
-        {{ 'icon-close.svg' | inline_asset_content }}
-      </button>
+      <div class="site-header__mobile-header-actions">
+        <button
+          type="button"
+          class="site-header__icon-btn theme-toggle"
+          aria-label="Switch to Dark Mode"
+          title="Switch to Dark Mode"
+          data-theme-toggle
+        >
+          <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+            {{ 'icon-moon.svg' | inline_asset_content }}
+          </span>
+          <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+            {{ 'icon-sun.svg' | inline_asset_content }}
+          </span>
+        </button>
+        <button
+          type="button"
+          class="site-header__icon-btn"
+          aria-label="Close navigation menu"
+          onclick="document.getElementById('MobileNav').classList.remove('is-open');"
+        >
+          {{ 'icon-close.svg' | inline_asset_content }}
+        </button>
+      </div>
     </div>
     <ul class="site-header__mobile-menu">
       {% for link in section.settings.menu.links %}
@@ -105,13 +137,30 @@
         <li><a href="#newsletter" class="site-header__mobile-link">Botanical Journal</a></li>
       {% endfor %}
     </ul>
-    {% if shop.customer_accounts_enabled %}
-      <div class="site-header__mobile-footer">
+    <div class="site-header__mobile-footer">
+      <div class="site-header__mobile-theme-row">
+        <span class="site-header__mobile-theme-label">Appearance</span>
+        <button
+          type="button"
+          class="site-header__mobile-theme-btn theme-toggle"
+          aria-label="Switch to Dark Mode"
+          data-theme-toggle
+        >
+          <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+            {{ 'icon-moon.svg' | inline_asset_content }}
+          </span>
+          <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+            {{ 'icon-sun.svg' | inline_asset_content }}
+          </span>
+          <span class="theme-toggle__label-text">Light Mode</span>
+        </button>
+      </div>
+      {% if shop.customer_accounts_enabled %}
         <a href="{{ routes.account_url }}" class="site-header__mobile-link">
           {{ 'customers.login.title' | t | default: 'Login' }}
         </a>
-      </div>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
 </header>
 
@@ -416,7 +465,211 @@
       display: inline-flex;
     }
   }
+
+  /* Theme Toggle Icon & Button */
+  .theme-toggle {
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0.45rem;
+    color: var(--color-text-primary, #25352B);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-accent, #A18455);
+    background-color: rgba(161, 132, 85, 0.12);
+    transform: scale(1.06);
+  }
+
+  .theme-toggle__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.35s var(--ease-luxury), opacity 0.35s ease;
+  }
+
+  .theme-toggle__icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+  }
+
+  /* In Light Mode: display moon, hide sun */
+  :root[data-theme="light"] .theme-toggle__icon--moon,
+  html[data-theme="light"] .theme-toggle__icon--moon,
+  :root:not([data-theme="dark"]) .theme-toggle__icon--moon {
+    display: inline-flex;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--color-text-primary, #25352B);
+  }
+
+  :root[data-theme="light"] .theme-toggle__icon--sun,
+  html[data-theme="light"] .theme-toggle__icon--sun,
+  :root:not([data-theme="dark"]) .theme-toggle__icon--sun {
+    display: none;
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  /* In Dark Mode: display sun, hide moon */
+  :root[data-theme="dark"] .theme-toggle__icon--sun,
+  html[data-theme="dark"] .theme-toggle__icon--sun {
+    display: inline-flex;
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    color: var(--color-accent, #C9A46A);
+  }
+
+  :root[data-theme="dark"] .theme-toggle__icon--moon,
+  html[data-theme="dark"] .theme-toggle__icon--moon {
+    display: none;
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+
+  /* Tooltip */
+  .theme-toggle__tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 50%;
+    transform: translateX(50%) translateY(4px);
+    background-color: var(--color-bg-card, #FFFFFF);
+    color: var(--color-text-primary, #25352B);
+    border: 1px solid var(--color-border, #E5E1D8);
+    box-shadow: 0 4px 16px var(--color-card-shadow, rgba(0, 0, 0, 0.15));
+    padding: 0.35rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    border-radius: 3px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 50;
+  }
+
+  .theme-toggle:hover .theme-toggle__tooltip,
+  .theme-toggle:focus-visible .theme-toggle__tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(50%) translateY(0);
+  }
+
+  /* Mobile theme styling */
+  .site-header__mobile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .site-header__mobile-theme-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border, #E5E1D8);
+  }
+
+  .site-header__mobile-theme-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary, #6F766E);
+  }
+
+  .site-header__mobile-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.95rem;
+    background-color: var(--color-bg-secondary, #F1EFE8);
+    border: 1px solid var(--color-border, #E5E1D8);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-primary, #25352B);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .site-header__mobile-theme-btn:hover {
+    border-color: var(--color-accent, #A18455);
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  (function() {
+    function getCurrentTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'light';
+    }
+
+    function syncThemeUI(theme) {
+      var isDark = theme === 'dark';
+      var nextLabel = isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+      var currentModeText = isDark ? 'Dark Mode' : 'Light Mode';
+
+      document.querySelectorAll('[data-theme-toggle]').forEach(function(btn) {
+        btn.setAttribute('aria-label', nextLabel);
+        btn.setAttribute('title', nextLabel);
+        var tooltip = btn.querySelector('.theme-toggle__tooltip');
+        if (tooltip) tooltip.textContent = nextLabel;
+        var labelText = btn.querySelector('.theme-toggle__label-text');
+        if (labelText) labelText.textContent = currentModeText;
+      });
+    }
+
+    function setTheme(theme) {
+      document.body.classList.add('theme-transitioning');
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('aryvan-theme', theme);
+      } catch (e) {}
+
+      syncThemeUI(theme);
+
+      setTimeout(function() {
+        document.body.classList.remove('theme-transitioning');
+      }, 400);
+
+      document.dispatchEvent(new CustomEvent('aryvan:themechange', { detail: { theme: theme } }));
+    }
+
+    function initThemeToggles() {
+      var currentTheme = getCurrentTheme();
+      syncThemeUI(currentTheme);
+
+      document.querySelectorAll('[data-theme-toggle]').forEach(function(btn) {
+        if (btn._aryvanBound) return;
+        btn._aryvanBound = true;
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var active = getCurrentTheme();
+          var target = active === 'dark' ? 'light' : 'dark';
+          setTheme(target);
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initThemeToggles);
+    } else {
+      initThemeToggles();
+    }
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
